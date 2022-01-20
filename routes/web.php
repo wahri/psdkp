@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Archive;
+use App\Http\Controllers\CategoryDocumentController;
+use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +18,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+Route::get('/dashboard/archive', [Archive::class, 'index'])->name('archive');
+
+Route::resource('/dashboard/category', CategoryDocumentController::class);
