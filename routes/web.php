@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Archive;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CategoryDocumentController;
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +33,7 @@ Auth::routes();
    example : dashboard.user.index
 */
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
-    Route::get('/', [Dashboard::class, 'index'])->name('index');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // ROUTE FOR ARCHIVE
     Route::prefix('archive')->group(function () {
@@ -49,6 +48,12 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
     // ROUTE FOR USER
     Route::resource('user', UserController::class);
-    Route::prefix('user')->group(function () {
+
+    Route::prefix('user')->name('user.')->group(function () {
+
+        //ROUTE FOR JSON RESPONSE
+        Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
+            Route::post('user-datatable', [UserController::class, 'getUserDatatable'])->name('user-datatable');
+        });
     });
 });

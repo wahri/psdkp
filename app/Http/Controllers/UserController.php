@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -80,5 +83,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getUserDatatable(Request $request)
+    {
+        return DataTables::of(User::with('roles'))->make(true);
     }
 }
