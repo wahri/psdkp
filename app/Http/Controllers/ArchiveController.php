@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Archive extends Controller
+class ArchiveController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,6 @@ class Archive extends Controller
      */
     public function index()
     {
-        return view('dashboard.archive');
+        // return view('dashboard.archive');
     }
 }

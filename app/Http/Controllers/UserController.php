@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryDocument;
 use Illuminate\Http\Request;
 
-class CategoryDocumentController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +13,7 @@ class CategoryDocumentController extends Controller
      */
     public function index()
     {
+        return view("pages.user.index");
     }
 
     /**
@@ -23,6 +23,7 @@ class CategoryDocumentController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -39,10 +40,10 @@ class CategoryDocumentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CategoryDocument  $categoryDocument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoryDocument $categoryDocument)
+    public function show($id)
     {
         //
     }
@@ -50,10 +51,10 @@ class CategoryDocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CategoryDocument  $categoryDocument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryDocument $categoryDocument)
+    public function edit($id)
     {
         //
     }
@@ -62,10 +63,10 @@ class CategoryDocumentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CategoryDocument  $categoryDocument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoryDocument $categoryDocument)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -73,10 +74,10 @@ class CategoryDocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CategoryDocument  $categoryDocument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoryDocument $categoryDocument)
+    public function destroy($id)
     {
         //
     }
