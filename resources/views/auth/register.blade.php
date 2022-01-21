@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Registration Page</title>
+    <title>PSDKP | Register</title>
 
     <script src="https://kit.fontawesome.com/3c3b5dd79d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/app.css">

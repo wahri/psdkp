@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Archive;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,13 +23,32 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
 
 Auth::routes();
 
-Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
-Route::get('/dashboard/archive', [Archive::class, 'index'])->name('archive');
 
-Route::resource('/dashboard/category', CategoryDocumentController::class);
+
+/*
+   ** ROUTE NAMING **
+   note: naming use prefix dashboard.
+   example : dashboard.user.index
+*/
+Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
+    Route::get('/', [Dashboard::class, 'index'])->name('index');
+
+    // ROUTE FOR ARCHIVE
+    Route::prefix('archive')->group(function () {
+        Route::get('/', [ArchiveController::class, 'index'])->name('archive');
+    });
+
+    // ROUTE FOR DOCUMENT CATEGORY
+    Route::resource('category', CategoryDocumentController::class);
+    Route::prefix('category')->group(function () {
+    });
+
+
+    // ROUTE FOR USER
+    Route::resource('user', UserController::class);
+    Route::prefix('user')->group(function () {
+    });
+});

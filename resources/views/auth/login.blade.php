@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in</title>
+    <title>PSDKP | Log in</title>
 
     <script src="https://kit.fontawesome.com/3c3b5dd79d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/app.css">
@@ -27,8 +27,8 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="email" value="{{ old('email') }}"
-                            placeholder="Email" autofocus>
+                        <input type="text" class="form-control" name="username" value="{{ old('username') }}"
+                            placeholder="Username" autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
