@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -34,7 +37,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), User::$rules, User::$messages);
+
+        if (!$validation->fails()) {
+            $saveUser = User::saveUser($validation->validated());
+
+            if ($saveUser) {
+                $result['message'] = "Berhasil mendaftarkan user!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
     }
 
     /**
@@ -45,7 +64,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+
+        $userDetail = User::getUserDetail($id);
+
+        if ($userDetail->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $userDetail;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
     }
 
     /**
@@ -68,7 +102,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), User::$updateRules, User::$updateMessages);
+
+        if (!$validation->fails()) {
+            $saveUser = User::updateUser($validation->validated(), $id);
+
+            if ($saveUser) {
+                $result['message'] = "Berhasil mengupdate user!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
     }
 
     /**
@@ -77,8 +127,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if ($user->delete()) {
+            $result['message'] = "Berhasil menghapus akun!";
+            return response()->json($result, 200);
+        }
+    }
+
+    public function getUserDatatable(Request $request)
+    {
+
+        $query =  User::with('roles')->select("users.*")
+            ->whereHas('roles', function ($query) {
+                return $query->where('name', '!=', 'Super Admin')->select('*');
+            });
+
+
+        return DataTables::eloquent($query)
+            ->addColumn('roles', function ($query) {
+                return $query->getRoleNames()->first();
+            })
+            ->make(true);
     }
 }
