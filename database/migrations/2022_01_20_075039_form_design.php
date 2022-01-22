@@ -15,8 +15,10 @@ class FormDesign extends Migration
     {
         Schema::create('form_design', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_kolom');
             $table->json('field');
-            $table->string('name');
+            $table->boolean('is_master');
+            $table->integer('reference_master');
             $table->timestamps();
         });
     }
