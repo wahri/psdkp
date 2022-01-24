@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\ArchiveDocumentController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LockerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +39,14 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
     // ROUTE FOR ARCHIVE
     Route::prefix('archive')->group(function () {
-        Route::get('/', [ArchiveController::class, 'index'])->name('archive');
+        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('archive');
+        Route::get('/create', [ArchiveDocumentController::class, 'create'])->name('create');
+    });
+
+    // ROUTE FOR LOCKER
+    Route::prefix('locker')->name('locker.')->group(function () {
+        Route::get('/', [LockerController::class, 'index'])->name('index');
+        Route::get('/create', [LockerController::class, 'create'])->name('create');
     });
 
     // ROUTE FOR DOCUMENT CATEGORY
