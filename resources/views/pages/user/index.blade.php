@@ -114,6 +114,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="pcture">Picture :</label>
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                  <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -177,7 +188,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="pcture">Picture :</label>
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                  <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
