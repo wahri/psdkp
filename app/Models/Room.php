@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Locker extends Model
+class Room extends Model
 {
     use HasFactory;
 
     protected $guarded = "id";
 
-    public function room()
+    public function lockers()
     {
-        return $this->belongsTo(Room::class);
-    }
-
-    public function racks()
-    {
-        return $this->hasMany(Rack::class);
+        return $this->hasMany(Locker::class);
     }
 }
