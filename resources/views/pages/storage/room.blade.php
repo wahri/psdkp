@@ -38,8 +38,16 @@
                                     @foreach ($locker as $eachLocker)
                                         <div class="col-6">
                                             <div class="card">
-                                                <div class="card-header text-center bg-dark">
-                                                    <h3 class="card-title">Locker {{ $eachLocker->code }}</h3>
+                                                <div class="card-header bg-dark d-flex justify-content-between">
+                                                    <h3 class="card-title">Locker {{ $eachLocker->code }} </h3>
+                                                    <div class="text-right">
+                                                        <button class="btn btn-info btn-sm">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                                 <!-- /.card-header -->
                                                 <div class="card-body">
@@ -47,13 +55,21 @@
                                                     <div id="accordion{{ $eachLocker->id }}">
                                                         @foreach ($eachLocker->racks as $eachRack)
                                                             <div class="card card-info">
-                                                                <div class="card-header">
+                                                                <div class="card-header d-flex justify-content-between">
                                                                     <h4 class="card-title w-100">
                                                                         <a class="d-block w-100" data-toggle="collapse"
                                                                             href="#collapseRacksId{{ $eachRack->id }}">
                                                                             Rak {{ $eachRack->code }}
                                                                         </a>
                                                                     </h4>
+                                                                    <div class="text-right">
+                                                                        <button class="btn btn-warning btn-sm">
+                                                                            <i class="fas fa-edit"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-danger btn-sm">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                                 <div id="collapseRacksId{{ $eachRack->id }}"
                                                                     class="collapse"
