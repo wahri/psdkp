@@ -29,8 +29,8 @@
                     <div class="col-lg-12">
 
                         <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal"
-                            data-target="#addUserModal">
-                            <i class="fas fa-plus mr-2"></i>New User
+                            data-target="#addRoomModal">
+                            <i class="fas fa-plus mr-2"></i>New Room
                         </button>
                         <div class="row">
                             @foreach ($data_ruangan as $ruang)
@@ -58,10 +58,40 @@
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
-        </div>
+             {{-- add room modal --}}
+            </div>
         <!-- /.content -->
     </div>
 
+   {{-- add room modal --}}
+   <form action="{{ route('dashboard.storage.create.room') }}" id="addRoomForm" method="post">
+    @csrf
+    <div class="modal fade" id="addRoomModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New Room</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Nama Ruang :</label>
+                                <input id="name" type="text" name="name" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
 @endsection
 
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}
@@ -82,9 +112,9 @@
     <!-- AdminLTE App -->
     <script>
         $(function() {
-            let addUserModal = $("div#addUserModal");
+            let addRoomModal = $("div#addRoomModal");
             let editUserModal = $("div#editUserModal");
-            let addUserForm = $("form#addUserForm");
+            let addRoomForm = $("form#addRoomForm");
             let editUserForm = $("form#editUserForm");
 
             let userListTable = $('#userListTable').DataTable({
@@ -166,7 +196,7 @@
             });
 
             //submit form action
-            addUserForm.on("submit", function(event) {
+            addRoomForm.on("submit", function(event) {
                 event.preventDefault();
                 let form = $(this);
                 let url = $(this).attr("action");
@@ -180,8 +210,9 @@
                     success: function(res) {
                         showNotification(res.message, "success", 3000);
                         userListTable.ajax.reload();
-                        addUserModal.modal("toggle");
+                        addRoomModal.modal("toggle");
                         form[0].reset();
+                        location.reload()
                     },
                     error: function(res) {
                         let data = res.responseJSON;

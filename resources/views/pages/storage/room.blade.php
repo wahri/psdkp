@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal"
-                                    data-target="#addUserModal">
+                                    data-target="#addLockerModal">
                                     <i class="fas fa-plus mr-2"></i> Tambah Locker
                                 </button>
                                 <div class="row">
@@ -80,16 +80,22 @@
                                                                                 </div>
                                                                             @endforeach
                                                                         </div>
-                                                                        <a href="#" class="btn btn-success btn-block">Tambah
-                                                                            Box</a>
+                                                                        <button type="button" class="btn btn-block btn-success"
+                                                        data-toggle="modal" data-target="#addBoxModal"
+                                                        data-id="{{ $eachRack->id }}">
+                                                        <i class="fas fa-plus"></i> Tambah Box
+                                                    </button>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         @endforeach
                                                     </div>
-                                                    <a href="#" class="btn btn-block btn-success"><i
-                                                            class="fas fa-plus"></i>
-                                                        Tambah Rak</a>
+                                                    <button type="button" class="btn btn-block btn-success"
+                                                        data-toggle="modal" data-target="#addRackModal"
+                                                        data-id="{{ $eachLocker->id }}">
+                                                        <i class="fas fa-plus"></i> Tambah Rak
+                                                    </button>
                                                 </div>
                                                 <!-- /.card-body -->
                                             </div>
@@ -105,6 +111,103 @@
         </div>
         <!-- /.content -->
     </div>
+
+    {{-- add locker modal --}}
+    <form action="{{ route('dashboard.storage.create.room.locker', $room->id) }}" id="addLockerForm" method="post">
+        @csrf
+        <div class="modal fade" id="addLockerModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Locker</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="code">Nama Locker :</label>
+                                    <input id="code" type="text" name="code" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+
+    {{-- add rack modal --}}
+    <form action="{{ route('dashboard.storage.create.room.locker.rack') }}" id="addRackForm" method="post">
+        @csrf
+        <div class="modal fade" id="addRackModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Rack</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="codeRack">Nama Rak :</label>
+                                    <input id="codeRack" type="text" name="code" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <input id="locker_id" type="hidden" name="locker_id" class="form-control" value="">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    {{-- add box modal --}}
+    <form action="{{ route('dashboard.storage.create.room.locker.rack.box') }}" id="addBoxForm" method="post">
+        @csrf
+        <div class="modal fade" id="addBoxModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Box</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="codeBox">Nama Box :</label>
+                                    <input id="codeBox" type="text" name="code" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <input id="rack_id" type="hidden" name="rack_id" class="form-control" value="">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
 
 @endsection
 
@@ -126,91 +229,33 @@
     <!-- AdminLTE App -->
     <script>
         $(function() {
-            let addUserModal = $("div#addUserModal");
+            let addLockerModal = $("div#addLockerModal");
+            let addRackModal = $("div#addRackModal");
+            let addBoxModal = $("div#addBoxModal");
             let editUserModal = $("div#editUserModal");
-            let addUserForm = $("form#addUserForm");
+            let addLockerForm = $("form#addLockerForm");
+            let addRackForm = $("form#addRackForm");
+            let addBoxForm = $("form#addBoxForm");
             let editUserForm = $("form#editUserForm");
 
-            let userListTable = $('#userListTable').DataTable({
-                searching: true,
-                autoWidth: false,
-                processing: true,
-                serverSide: true,
-                pageLength: 10,
-                ajax: {
-                    url: "{{ route('dashboard.user.get.user-datatable') }}",
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    }
-                },
-                columns: [{
-                        data: 'name',
-                        name: 'name',
-                        defaultContent: "-"
-                    },
-                    {
-                        data: 'username',
-                        name: 'username',
-                        defaultContent: "-"
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            return moment(data).format("LLL");
-                        }
-                    },
-                    {
-                        data: 'updated_at',
-                        name: 'updated_at',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            return moment(data).format("LLL");
-                        }
-                    },
-                    {
-                        data: 'roles',
-                        name: 'roles.name',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            switch (data) {
-                                case "Admin":
-                                    return `
-                                <span class="badge badge-success">${data}</span>
-                                `
-                                    break;
+            addRackModal.on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var locker_id = button.data('id')
+                console.log(locker_id)
+                var modal = $(this)
+                modal.find('.modal-body input#locker_id').val(locker_id)
+            })
 
-                                case "User":
-                                    return `
-                                    <span class="badge badge-primary">${data}</span>
-                                    `
-                                    break;
-                            }
-
-                        }
-                    },
-                    {
-                        render: function(data, type, row) {
-                            return `
-                            <div class="form-group">
-                                <button data-id=${row.id} name="edit"  class="btn btn-success">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button data-id=${row.id} name="delete" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        `
-                        }
-                    },
-
-                ],
-            });
+            addBoxModal.on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var rack_id = button.data('id')
+                console.log(rack_id)
+                var modal = $(this)
+                modal.find('.modal-body input#rack_id').val(rack_id)
+            })
 
             //submit form action
-            addUserForm.on("submit", function(event) {
+            addLockerForm.on("submit", function(event) {
                 event.preventDefault();
                 let form = $(this);
                 let url = $(this).attr("action");
@@ -223,9 +268,65 @@
                     dataType: "JSON",
                     success: function(res) {
                         showNotification(res.message, "success", 3000);
-                        userListTable.ajax.reload();
-                        addUserModal.modal("toggle");
+                        // userListTable.ajax.reload();
+                        // addLockerModal.modal("toggle");
                         form[0].reset();
+                        location.reload();
+                    },
+                    error: function(res) {
+                        let data = res.responseJSON;
+                        showNotification(data.message, "error", 3000);
+                    }
+                })
+
+
+            })
+
+            addRackForm.on("submit", function(event) {
+                event.preventDefault();
+                let form = $(this);
+                let url = $(this).attr("action");
+                var code = $('#codeRack').val();
+                let data = $(this).serialize();
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data,
+                    dataType: "JSON",
+                    success: function(res) {
+                        showNotification(res.message, "success", 3000);
+                        // userListTable.ajax.reload();
+                        // addRackModal.modal("toggle");
+                        form[0].reset();
+                        location.reload();
+                    },
+                    error: function(res) {
+                        let data = res.responseJSON;
+                        showNotification(data.message, "error", 3000);
+                    }
+                })
+
+
+            })
+
+            addBoxForm.on("submit", function(event) {
+                event.preventDefault();
+                let form = $(this);
+                let url = $(this).attr("action");
+                let data = $(this).serialize();
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data,
+                    dataType: "JSON",
+                    success: function(res) {
+                        showNotification(res.message, "success", 3000);
+                        // userListTable.ajax.reload();
+                        // addRackModal.modal("toggle");
+                        form[0].reset();
+                        location.reload();
                     },
                     error: function(res) {
                         let data = res.responseJSON;

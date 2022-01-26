@@ -47,9 +47,12 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     // ROUTE FOR LOCKER
     Route::prefix('storage')->name('storage.')->group(function () {
         Route::get('/', [StorageController::class, 'index'])->name('index');
-        Route::get('/create', [StorageController::class, 'create'])->name('create');
+        Route::post('create-room', [StorageController::class, 'StoreRoom'])->name('create.room');
         Route::get('/{room_id}', [StorageController::class, 'room'])->name('room');
+        Route::post('{room_id}/locker', [StorageController::class, 'StoreLocker'])->name('create.room.locker');
         Route::get('/{room}/{locker}', [StorageController::class, 'locker'])->name('locker');
+        Route::post('/locker/rack', [StorageController::class, 'StoreRack'])->name('create.room.locker.rack');
+        Route::post('/rack/box', [StorageController::class, 'StoreBox'])->name('create.room.locker.rack.box');
     });
 
     // ROUTE FOR DOCUMENT CATEGORY
