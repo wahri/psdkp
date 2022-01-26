@@ -14,7 +14,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">User Management</li>
+                            <li class="breadcrumb-item active">Archive Management</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -32,10 +32,9 @@
                                 <h3 class="card-title">User Management</h3>
                             </div>
                             <div class="card-body">
-                                <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal"
-                                    data-target="#addUserModal">
+                                <a href="/dashboard/archive/create" class="btn btn-success btn-sm mb-3">
                                     <i class="fas fa-plus mr-2"></i>New User
-                                </button>
+                                </a>
                                 <table id="userListTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
