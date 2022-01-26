@@ -35,22 +35,34 @@
                         <div class="row">
                             @foreach ($data_ruangan as $ruang)
                                 <div class="col-4">
-                                    <a href="{{ route('dashboard.storage.room', $ruang->id) }}"
-                                        class="text-decoration-none text-dark">
-                                        <div class="info-box">
-                                            <span class="info-box-icon bg-info elevation-1"><i
-                                                    class="fas fa-boxes"></i></span>
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-info elevation-1"><i
+                                                class="fas fa-boxes"></i></span>
 
-                                            <div class="info-box-content">
-                                                <span class="info-box-text">{{ $ruang->name }}</span>
-                                                <span class="info-box-number">
-                                                    {{ $ruang->lockers->count() }}
-                                                    <small>Locker</small>
-                                                </span>
-                                            </div>
-                                            <!-- /.info-box-content -->
+                                        <div class="info-box-content">
+                                            <span class="info-box-text d-flex justify-content-between">
+                                                {{ $ruang->name }}
+                                                <div class="text-right">
+                                                    <a href="" class="">
+                                                        <i class="fas fa-edit text-info"></i>
+                                                    </a>
+                                                    <a href="" class="">
+                                                        <i class="fas fa-trash text-danger"></i>
+                                                    </a>
+
+                                                </div>
+                                            </span>
+                                            <span class="info-box-number">
+                                                {{ $ruang->lockers->count() }}
+                                                <small>Locker</small>
+                                            </span>
+                                            <a href="{{ route('dashboard.storage.room', $ruang->id) }}"
+                                                class="btn btn-success">
+                                                <i class="fas fa-plus"></i> Tambah Locker
+                                            </a>
                                         </div>
-                                    </a>
+                                        <!-- /.info-box-content -->
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
