@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRuangTable extends Migration
+class CreateDocumentTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateRuangTable extends Migration
      */
     public function up()
     {
-        Schema::create('ruang', function (Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('information');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateRuangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ruang');
+        Schema::dropIfExists('document_types');
     }
 }

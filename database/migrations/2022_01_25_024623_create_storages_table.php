@@ -48,6 +48,9 @@ class CreateStoragesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storages');
+        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('lockers');
+        Schema::dropIfExists('racks');
+        Schema::dropIfExists('boxes');
     }
 }

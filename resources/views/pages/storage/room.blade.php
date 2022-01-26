@@ -38,7 +38,7 @@
                                     @foreach ($locker as $eachLocker)
                                         <div class="col-6">
                                             <div class="card">
-                                                <div class="card-header text-center">
+                                                <div class="card-header text-center bg-dark">
                                                     <h3 class="card-title">Locker {{ $eachLocker->code }}</h3>
                                                 </div>
                                                 <!-- /.card-header -->
