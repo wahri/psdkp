@@ -30,7 +30,7 @@
 
                         <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal"
                             data-target="#addUserModal">
-                            <i class="fas fa-plus mr-2"></i>New User
+                            <i class="fas fa-plus mr-2"></i> Tambah Ruangan
                         </button>
                         <div class="row">
                             @foreach ($data_ruangan as $ruang)

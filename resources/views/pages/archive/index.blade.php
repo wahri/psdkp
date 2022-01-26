@@ -10,6 +10,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
+                        <h1 class="m-0">Arsip Dokumen</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -25,6 +26,20 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Pilih Dokumen</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <div class="card card-secondary">
