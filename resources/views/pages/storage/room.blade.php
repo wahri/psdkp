@@ -3,19 +3,15 @@
 @section('title', 'PSDKP | USER')
 
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">User Management</li>
-                        </ol>
+                    <div class="col-sm-6 d-flex">
+                        <a href="{{ route('dashboard.storage.index') }}" class="btn btn-secondary"><i
+                                class="fas fa-arrow-left"></i></a>
+                        <h1 class="ml-3">Kelola Tempat Penyimpanan</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -25,34 +21,81 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <div class="card card-secondary">
-                            <div class="card-header">
-                                <h3 class="card-title">User Management</h3>
-                            </div>
-                            <div class="card-body">
-                                <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal"
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            {{ $room->name }}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal"
                                     data-target="#addUserModal">
-                                    <i class="fas fa-plus mr-2"></i>New User
+                                    <i class="fas fa-plus mr-2"></i> Tambah Locker
                                 </button>
-                                <table id="userListTable" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Username</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
-                                            <th>Role</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <div class="row">
+                                    @foreach ($locker as $eachLocker)
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header text-center bg-dark">
+                                                    <h3 class="card-title">Locker {{ $eachLocker->code }}</h3>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                                                    <div id="accordion{{ $eachLocker->id }}">
+                                                        @foreach ($eachLocker->racks as $eachRack)
+                                                            <div class="card card-info">
+                                                                <div class="card-header">
+                                                                    <h4 class="card-title w-100">
+                                                                        <a class="d-block w-100" data-toggle="collapse"
+                                                                            href="#collapseRacksId{{ $eachRack->id }}">
+                                                                            Rak {{ $eachRack->code }}
+                                                                        </a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapseRacksId{{ $eachRack->id }}"
+                                                                    class="collapse"
+                                                                    data-parent="#accordion{{ $eachLocker->id }}">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            @foreach ($eachRack->boxes as $eachBox)
+                                                                                <div class="col-6">
+                                                                                    <div class="info-box">
+                                                                                        <span
+                                                                                            class="info-box-icon bg-info elevation-1"><i
+                                                                                                class="fas fa-cog"></i></span>
 
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
+                                                                                        <div class="info-box-content">
+                                                                                            <span
+                                                                                                class="info-box-text">{{ $eachBox->code }}</span>
+                                                                                            <span class="info-box-number">
+                                                                                                10
+                                                                                                <small>Dokumen</small>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <!-- /.info-box-content -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <a href="#" class="btn btn-success btn-block">Tambah
+                                                                            Box</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <a href="#" class="btn btn-block btn-success"><i
+                                                            class="fas fa-plus"></i>
+                                                        Tambah Rak</a>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,136 +105,7 @@
         </div>
         <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
-
-    {{-- add user modal --}}
-    <form action="{{ route('dashboard.user.store') }}" id="addUserForm" method="post">
-        @csrf
-        <div class="modal fade" id="addUserModal">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">New User</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Nama :</label>
-                                    <input id="name" type="text" name="name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="username">Username :</label>
-                                    <input id="username" type="text" name="username" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="password">Password :</label>
-                                    <input id="password" type="password" name="password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="password_confirm">Confirm Password :</label>
-                                    <input id="password_confirm" type="password" name="password_confirm"
-                                        class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="role">Role :</label>
-                                    <select name="role" id="role" class="custom-select">
-                                        <option value="">Pilih Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="User">User</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    </form>
-
-    {{-- edit user modal --}}
-    <form id="editUserForm" method="POST">
-        @csrf
-        <div class="modal fade" id="editUserModal">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">New User</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="name">Nama :</label>
-                                    <input id="name" readonly type="text" name="name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="username">Username :</label>
-                                    <input id="username" readonly type="text" name="username" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="password">Password :</label>
-                                    <input id="password" type="password" name="password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="password_confirm">Confirm Password :</label>
-                                    <input id="password_confirm" type="password" name="password_confirm"
-                                        class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="role">Role :</label>
-                                    <select name="role" id="role" class="custom-select">
-                                        <option value="">Pilih Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="User">User</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    </form>
 @endsection
 
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}

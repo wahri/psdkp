@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\ArchiveDocumentController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LockerController;
+use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +40,16 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
     // ROUTE FOR ARCHIVE
     Route::prefix('archive')->group(function () {
-        Route::get('/', [ArchiveController::class, 'index'])->name('archive');
+        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('archive');
+        Route::get('/create', [ArchiveDocumentController::class, 'create'])->name('create');
+    });
+
+    // ROUTE FOR LOCKER
+    Route::prefix('storage')->name('storage.')->group(function () {
+        Route::get('/', [StorageController::class, 'index'])->name('index');
+        Route::get('/create', [StorageController::class, 'create'])->name('create');
+        Route::get('/{room_id}', [StorageController::class, 'room'])->name('room');
+        Route::get('/{room}/{locker}', [StorageController::class, 'locker'])->name('locker');
     });
 
     // ROUTE FOR DOCUMENT CATEGORY

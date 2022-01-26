@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FormDesign extends Migration
+class CreateDocumentTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class FormDesign extends Migration
      */
     public function up()
     {
-        Schema::create('form_design', function (Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kolom');
-            $table->json('field');
-            $table->boolean('is_master');
-            $table->integer('reference_master');
+            $table->string('name');
+            $table->string('information');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class FormDesign extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_design');
+        Schema::dropIfExists('document_types');
     }
 }
