@@ -38,10 +38,10 @@
                                     @foreach ($locker as $eachLocker)
                                         <div class="col-6">
                                             <div class="card">
-                                                <div class="card-header bg-dark d-flex justify-content-between">
+                                                <div class="card-header bg-dark">
                                                     <h3 class="card-title">Locker {{ $eachLocker->code }} </h3>
-                                                    <div class="text-right">
-                                                        <button class="btn btn-info btn-sm">
+                                                    <div class="card-tools">
+                                                        <button class="btn btn-warning btn-sm">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <button class="btn btn-danger btn-sm">
@@ -55,20 +55,22 @@
                                                     <div id="accordion{{ $eachLocker->id }}">
                                                         @foreach ($eachLocker->racks as $eachRack)
                                                             <div class="card card-info">
-                                                                <div class="card-header d-flex justify-content-between">
+                                                                <div class="card-header">
                                                                     <h4 class="card-title w-100">
-                                                                        <a class="d-block w-100" data-toggle="collapse"
-                                                                            href="#collapseRacksId{{ $eachRack->id }}">
-                                                                            Rak {{ $eachRack->code }}
-                                                                        </a>
+                                                                        <div class="d-flex">
+                                                                            <a class="w-100 mt-1" data-toggle="collapse"
+                                                                                href="#collapseRacksId{{ $eachRack->id }}">
+                                                                                Rak {{ $eachRack->code }}
+                                                                            </a>
+                                                                            <button class="btn btn-warning btn-sm">
+                                                                                <i class="fas fa-edit"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-danger btn-sm ml-1">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </h4>
-                                                                    <div class="text-right">
-                                                                        <button class="btn btn-warning btn-sm">
-                                                                            <i class="fas fa-edit"></i>
-                                                                        </button>
-                                                                        <button class="btn btn-danger btn-sm">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
+                                                                    <div class="card-tools">
                                                                     </div>
                                                                 </div>
                                                                 <div id="collapseRacksId{{ $eachRack->id }}"
@@ -80,12 +82,30 @@
                                                                                 <div class="col-6">
                                                                                     <div class="info-box">
                                                                                         <span
-                                                                                            class="info-box-icon bg-info elevation-1"><i
-                                                                                                class="fas fa-cog"></i></span>
+                                                                                            class="info-box-icon bg-info elevation-1">
+                                                                                            <i class="fas fa-cog"></i>
+                                                                                        </span>
 
                                                                                         <div class="info-box-content">
                                                                                             <span
-                                                                                                class="info-box-text">{{ $eachBox->code }}</span>
+                                                                                                class="info-box-text d-flex justify-content-between">
+                                                                                                <span
+                                                                                                    class="w-100">
+                                                                                                    {{ $eachBox->code }}
+
+                                                                                                </span>
+                                                                                                <button
+                                                                                                    class="btn btn-sm btn-warning">
+                                                                                                    <i
+                                                                                                        class="fas fa-edit "></i>
+                                                                                                </button>
+                                                                                                <button
+                                                                                                    class="btn btn-sm btn-danger ml-1">
+                                                                                                    <i
+                                                                                                        class="fas fa-trash "></i>
+                                                                                                </button>
+
+                                                                                            </span>
                                                                                             <span class="info-box-number">
                                                                                                 10
                                                                                                 <small>Dokumen</small>
