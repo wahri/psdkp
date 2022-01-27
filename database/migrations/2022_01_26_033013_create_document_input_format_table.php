@@ -13,17 +13,12 @@ class CreateDocumentInputFormatTable extends Migration
      */
     public function up()
     {
-        Schema::create('input_headers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
         Schema::create('input_formats', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('type');
-            $table->unsignedBigInteger('header_id')->nullable();
-            $table->foreign('header_id')->references('id')->on('input_headers')->onDelete('set null')->onUpdate('cascade');
+            $table->unsignedBigInteger('document_type_id')->nullable();
+            $table->foreign('document_type_id')->references('id')->on('document_types')->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
         });
         Schema::create('input_options', function (Blueprint $table) {
@@ -42,7 +37,6 @@ class CreateDocumentInputFormatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('input_headers');
         Schema::dropIfExists('input_formats');
         Schema::dropIfExists('input_options');
     }
