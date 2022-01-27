@@ -10,11 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
+                        <h1 class="m-0">Arsip Dokumen</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">User Management</li>
+                            <li class="breadcrumb-item active">Archive Management</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -26,16 +27,29 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Pilih Dokumen</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <div class="card card-secondary">
                             <div class="card-header">
                                 <h3 class="card-title">User Management</h3>
                             </div>
                             <div class="card-body">
-                                <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal"
-                                    data-target="#addUserModal">
+                                <a href="/dashboard/archive/create" class="btn btn-success btn-sm mb-3">
                                     <i class="fas fa-plus mr-2"></i>New User
-                                </button>
+                                </a>
                                 <table id="userListTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
