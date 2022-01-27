@@ -41,16 +41,16 @@ class UserController extends Controller
         $result['code'] = 400;
 
         $validation = Validator::make($request->all(), User::$rules, User::$messages);
+    
 
         if (!$validation->fails()) {
-            $saveUser = User::saveUser($validation->validated());
+            $saveUser = User::saveUser($request);
 
             if ($saveUser) {
                 $result['message'] = "Berhasil mendaftarkan user!";
                 return response()->json($result, 200);
             }
         }
-
 
         $result['message'] = "{$validation->errors()->first()}";
         return response()->json($result, 400);
@@ -102,13 +102,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $result = [];
         $result['code'] = 400;
 
         $validation = Validator::make($request->all(), User::$updateRules, User::$updateMessages);
 
         if (!$validation->fails()) {
-            $saveUser = User::updateUser($validation->validated(), $id);
+            $saveUser = User::updateUser($request, $id);
 
             if ($saveUser) {
                 $result['message'] = "Berhasil mengupdate user!";
@@ -150,4 +151,7 @@ class UserController extends Controller
             })
             ->make(true);
     }
+
+
+
 }

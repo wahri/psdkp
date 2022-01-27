@@ -65,7 +65,7 @@
 
 
 {{-- add user modal --}}
-<form action="{{ route("dashboard.user.store") }}" id="addUserForm" method="post">
+<form action="{{ route("dashboard.user.store") }}" id="addUserForm" enctype="multipart/form-data" method="post">
     @csrf
     <div class="modal fade" id="addUserModal">
         <div class="modal-dialog modal-lg">
@@ -119,8 +119,8 @@
                             <label for="pcture">Picture :</label>
                             <div class="input-group mb-3">
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="inputGroupFile02">
-                                  <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                                  <input type="file" class="custom-file-input" name="picture" id="inputGroupFile02">
+                                  <label class="custom-file-label" for="inputGroupFile02"  aria-describedby="inputGroupFileAddon02">Choose file</label>
                                 </div>
                             </div>
                         </div>
@@ -139,8 +139,9 @@
 </form>
 
 {{-- edit user modal --}}
-<form id="editUserForm" method="POST">
+<form id="editUserForm" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <div class="modal fade" id="editUserModal">
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -190,10 +191,10 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="pcture">Picture :</label>
+                            <label for="pcture">Picture : </label>
                             <div class="input-group mb-3">
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                  <input type="file" class="custom-file-input" name="picture" id="inputGroupFile02">
                                   <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
                                 </div>
                             </div>
@@ -304,13 +305,19 @@
             event.preventDefault();
             let form =$(this);
             let url = $(this).attr("action");
-            let data = $(this).serialize();
+            let data = new FormData(this);
+
             
             $.ajax({
                 url:url,
                 type:"POST",
                 data:data,
                 dataType:"JSON",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
                 success:function(res){
                     showNotification(res.message,"success",3000);
                     userListTable.ajax.reload();
@@ -330,14 +337,19 @@
         editUserForm.on("submit",function(event){
             event.preventDefault();
             let form =$(this);
+            let data = new FormData(this);
             let url = $(this).attr("action");
-            let data = $(this).serialize();
-            
+
             $.ajax({
                 url:url,
-                type:"PUT",
+                type:"POST",
                 data:data,
                 dataType:"JSON",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
                 success:function(res){
                     showNotification(res.message,"success",3000);
                     userListTable.ajax.reload();

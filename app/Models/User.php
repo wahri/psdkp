@@ -49,14 +49,16 @@ class User extends Authenticatable
         'username' => 'required|unique:users',
         'password' => 'required|min:6',
         'password_confirm' => 'required|same:password',
-        'role' => 'required'
+        'role' => 'required',
+        'picture' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:10000'
     ];
 
 
     public static $updateRules = [
         'password' => 'nullable|min:6',
         'password_confirm' => 'nullable|same:password',
-        'role' => 'required'
+        'role' => 'required',
+        'picture' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2000'
     ];
 
     public static $messages = [
@@ -67,13 +69,19 @@ class User extends Authenticatable
         'password.min' => 'Password minimal 6 karakter!',
         'password_confirm.required' => 'Konfirmasi password tidak boleh kosong!',
         'password_confirm.same' => 'Konfirmasi password harus sama dengan password!',
-        'role.required' => 'Role tidak boleh kosong!'
+        'role.required' => 'Role tidak boleh kosong!',
+        'picture.mimes' => 'Format tidak didukung!',
+        'picture.image' => 'Format tidak didukung!',
+        'picture.max' => 'Ukuran file maksimal 2mb!',
     ];
 
     public static $updateMessages = [
         'password.min' => 'Password minimal 6 karakter!',
         'password_confirm.same' => 'Konfirmasi password harus sama dengan password!',
-        'role.required' => 'Role tidak boleh kosong!'
+        'role.required' => 'Role tidak boleh kosong!',
+        'picture.mimes' => 'Format tidak didukung!',
+        'picture.image' => 'Format tidak didukung!',
+        'picture.max' => 'Ukuran file maksimal 2mb!',
     ];
 
     public static function saveUser($request)
@@ -84,6 +92,11 @@ class User extends Authenticatable
         $user->username = $request['username'];
         $user->password = bcrypt($request['password']);
         $user->assignRole($request['role']);
+
+        if($request->hasFile('picture')){
+            $path = $request->file('picture')->store('user','public');
+            $user->picture = $path;
+        }
 
         if ($user->save()) {
             return true;
@@ -98,6 +111,11 @@ class User extends Authenticatable
         if (!is_null($user->password))
             $user->password = bcrypt($request['password']);
         $user->syncRoles($request['role']);
+
+        if($request->hasFile('picture')){
+            $path = $request->file('picture')->store('user','public');
+            $user->picture = $path;
+        }
 
         if ($user->save()) {
             return true;
