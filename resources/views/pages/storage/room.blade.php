@@ -35,6 +35,117 @@
                                     <i class="fas fa-plus mr-2"></i> Tambah Locker
                                 </button>
                                 <div class="row">
+                                    <div class="col-12">
+                                        <div id="accordionLocker">
+
+                                            @foreach ($locker as $eachLocker)
+                                                <div class="card">
+                                                    <div class="card-header bg-secondary">
+                                                        <h4 class="card-title w-100">
+                                                            <div class="d-flex">
+                                                                <a class="w-100 mt-1 text-light" data-toggle="collapse"
+                                                                    href="#collapseLockerId{{ $eachLocker->id }}">
+                                                                    Locker {{ $eachLocker->code }}
+                                                                </a>
+                                                                <button class="btn btn-warning btn-sm">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                                <button class="btn btn-danger btn-sm ml-1">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseLockerId{{ $eachLocker->id }}" class="collapse"
+                                                        data-parent="#accordionLocker">
+                                                        <div class="card-body">
+                                                            <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                                                            <div id="accordion{{ $eachLocker->id }}">
+                                                                @foreach ($eachLocker->racks as $eachRack)
+                                                                    <div class="card card-info">
+                                                                        <div class="card-header">
+                                                                            <h4 class="card-title w-100">
+                                                                                <div class="d-flex">
+                                                                                    <a class="w-100 mt-1"
+                                                                                        data-toggle="collapse"
+                                                                                        href="#collapseRacksId{{ $eachRack->id }}">
+                                                                                        Rak {{ $eachRack->code }}
+                                                                                    </a>
+                                                                                    <button class="btn btn-warning btn-sm">
+                                                                                        <i class="fas fa-edit"></i>
+                                                                                    </button>
+                                                                                    <button
+                                                                                        class="btn btn-danger btn-sm ml-1">
+                                                                                        <i class="fas fa-trash"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseRacksId{{ $eachRack->id }}"
+                                                                            class="collapse"
+                                                                            data-parent="#accordion{{ $eachLocker->id }}">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    @foreach ($eachRack->boxes as $eachBox)
+                                                                                        <div class="col-6">
+                                                                                            <div class="info-box">
+                                                                                                <span
+                                                                                                    class="info-box-icon bg-info elevation-1">
+                                                                                                    <i
+                                                                                                        class="fas fa-cog"></i>
+                                                                                                </span>
+
+                                                                                                <div
+                                                                                                    class="info-box-content">
+                                                                                                    <span
+                                                                                                        class="info-box-text d-flex justify-content-between">
+                                                                                                        <span
+                                                                                                            class="w-100">
+                                                                                                            {{ $eachBox->code }}
+
+                                                                                                        </span>
+                                                                                                        <button
+                                                                                                            class="btn btn-sm btn-warning">
+                                                                                                            <i
+                                                                                                                class="fas fa-edit "></i>
+                                                                                                        </button>
+                                                                                                        <button
+                                                                                                            class="btn btn-sm btn-danger ml-1">
+                                                                                                            <i
+                                                                                                                class="fas fa-trash "></i>
+                                                                                                        </button>
+
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                        class="info-box-number">
+                                                                                                        10
+                                                                                                        <small>Dokumen</small>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <!-- /.info-box-content -->
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                                <a href="#"
+                                                                                    class="btn btn-success btn-block">Tambah
+                                                                                    Box</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <a href="#" class="btn btn-block btn-success"><i
+                                                                    class="fas fa-plus"></i>
+                                                                Tambah Rak</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
                                     @foreach ($locker as $eachLocker)
                                         <div class="col-6">
                                             <div class="card">
@@ -131,7 +242,7 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
