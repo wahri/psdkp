@@ -35,6 +35,33 @@ class Box extends Model
         return false;
     }
 
+    public static $updateRules = [
+        'code' => 'required',
+    ];
+
+    public static $updateMessages = [
+        'code.required' => 'Kode tidak boleh kosong!',
+    ];
+
+    public static function updateBox($request, $id)
+    {
+        $box = self::findOrFail($id);
+        $box->code = $request['code'];
+        if ($box->save()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public static function getBoxDetail($id)
+    {
+        $box = self::where('id', $id)
+            ->first();
+        return $box;
+    }
+
+
     public function rack()
     {
         return $this->belongsTo(Rack::class);

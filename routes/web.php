@@ -47,12 +47,27 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     // ROUTE FOR LOCKER
     Route::prefix('storage')->name('storage.')->group(function () {
         Route::get('/', [StorageController::class, 'index'])->name('index');
-        Route::post('create-room', [StorageController::class, 'StoreRoom'])->name('create.room');
         Route::get('/{room_id}', [StorageController::class, 'room'])->name('room');
+        Route::post('create-room', [StorageController::class, 'StoreRoom'])->name('create.room');
+        Route::get('/room/show/{id}', [StorageController::class, 'showRoom'])->name('show.room');
+        Route::put('/room/update/{id}', [StorageController::class, 'updateRoom'])->name('update.room');
+        Route::delete('/room/delete/{id}', [StorageController::class, 'destroyRoom'])->name('delete.room');
+
         Route::post('{room_id}/locker', [StorageController::class, 'StoreLocker'])->name('create.room.locker');
         Route::get('/{room}/{locker}', [StorageController::class, 'locker'])->name('locker');
+        Route::get('/locker/show/{id}', [StorageController::class, 'showLocker'])->name('show.locker');
+        Route::put('/locker/update/{id}', [StorageController::class, 'updateLocker'])->name('update.locker');
+        Route::delete('/locker/delete/{id}', [StorageController::class, 'destroyLocker'])->name('delete.locker');
+
         Route::post('/locker/rack', [StorageController::class, 'StoreRack'])->name('create.room.locker.rack');
+        Route::get('/rack/show/{id}', [StorageController::class, 'showRack'])->name('show.rack');
+        Route::put('/rack/update/{id}', [StorageController::class, 'updateRack'])->name('update.rack');
+        Route::delete('/rack/delete/{id}', [StorageController::class, 'destroyRack'])->name('delete.rack');
+
         Route::post('/rack/box', [StorageController::class, 'StoreBox'])->name('create.room.locker.rack.box');
+        Route::get('/box/show/{id}', [StorageController::class, 'showBox'])->name('show.box');
+        Route::put('/box/update/{id}', [StorageController::class, 'updateBox'])->name('update.box');
+        Route::delete('/box/delete/{id}', [StorageController::class, 'destroyBox'])->name('delete.box');
     });
 
     // ROUTE FOR DOCUMENT CATEGORY

@@ -34,6 +34,32 @@ class Rack extends Model
         return false;
     }
 
+    public static $updateRules = [
+        'code' => 'required',
+    ];
+
+    public static $updateMessages = [
+        'code.required' => 'Kode tidak boleh kosong!',
+    ];
+
+    public static function updateRack($request, $id)
+    {
+        $rack = self::findOrFail($id);
+        $rack->code = $request['code'];
+        if ($rack->save()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public static function getRackDetail($id)
+    {
+        $rack = self::where('id', $id)
+            ->first();
+        return $rack;
+    }
+
 
     public function locker()
     {

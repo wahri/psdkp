@@ -42,12 +42,12 @@
                                             <span class="info-box-text d-flex justify-content-between">
                                                 {{ $ruang->name }}
                                                 <div class="text-right">
-                                                    <a href="" class="">
-                                                        <i class="fas fa-edit text-info"></i>
-                                                    </a>
-                                                    <a href="" class="">
-                                                        <i class="fas fa-trash text-danger"></i>
-                                                    </a>
+                                                    <button class="btn btn-sm btn-warning" name="edit" data-id="{{ $ruang->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" name="delete" data-id="{{ $ruang->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
 
                                                 </div>
                                             </span>
@@ -103,6 +103,40 @@
         <!-- /.modal-dialog -->
     </div>
 </form>
+
+{{-- edit room modal --}}
+<form id="editRoomForm" method="POST">
+    @csrf
+    <div class="modal fade" id="editRoomModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ruang</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">Nama Ruang :</label>
+                                <input id="name" type="text" name="name" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+
 @endsection
 
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}
@@ -124,87 +158,87 @@
     <script>
         $(function() {
             let addRoomModal = $("div#addRoomModal");
-            let editUserModal = $("div#editUserModal");
+            let editRoomModal = $("div#editRoomModal");
             let addRoomForm = $("form#addRoomForm");
-            let editUserForm = $("form#editUserForm");
+            let editRoomForm = $("form#editRoomForm");
 
-            let userListTable = $('#userListTable').DataTable({
-                searching: true,
-                autoWidth: false,
-                processing: true,
-                serverSide: true,
-                pageLength: 10,
-                ajax: {
-                    url: "{{ route('dashboard.user.get.user-datatable') }}",
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    }
-                },
-                columns: [{
-                        data: 'name',
-                        name: 'name',
-                        defaultContent: "-"
-                    },
-                    {
-                        data: 'username',
-                        name: 'username',
-                        defaultContent: "-"
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            return moment(data).format("LLL");
-                        }
-                    },
-                    {
-                        data: 'updated_at',
-                        name: 'updated_at',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            return moment(data).format("LLL");
-                        }
-                    },
-                    {
-                        data: 'roles',
-                        name: 'roles.name',
-                        defaultContent: "-",
-                        render: function(data, type, row) {
-                            switch (data) {
-                                case "Admin":
-                                    return `
-                                <span class="badge badge-success">${data}</span>
-                                `
-                                    break;
+            // let userListTable = $('#userListTable').DataTable({
+            //     searching: true,
+            //     autoWidth: false,
+            //     processing: true,
+            //     serverSide: true,
+            //     pageLength: 10,
+            //     ajax: {
+            //         url: "{{ route('dashboard.user.get.user-datatable') }}",
+            //         type: 'POST',
+            //         headers: {
+            //             'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            //         }
+            //     },
+            //     columns: [{
+            //             data: 'name',
+            //             name: 'name',
+            //             defaultContent: "-"
+            //         },
+            //         {
+            //             data: 'username',
+            //             name: 'username',
+            //             defaultContent: "-"
+            //         },
+            //         {
+            //             data: 'created_at',
+            //             name: 'created_at',
+            //             defaultContent: "-",
+            //             render: function(data, type, row) {
+            //                 return moment(data).format("LLL");
+            //             }
+            //         },
+            //         {
+            //             data: 'updated_at',
+            //             name: 'updated_at',
+            //             defaultContent: "-",
+            //             render: function(data, type, row) {
+            //                 return moment(data).format("LLL");
+            //             }
+            //         },
+            //         {
+            //             data: 'roles',
+            //             name: 'roles.name',
+            //             defaultContent: "-",
+            //             render: function(data, type, row) {
+            //                 switch (data) {
+            //                     case "Admin":
+            //                         return `
+            //                     <span class="badge badge-success">${data}</span>
+            //                     `
+            //                         break;
 
-                                case "User":
-                                    return `
-                                    <span class="badge badge-primary">${data}</span>
-                                    `
-                                    break;
-                            }
+            //                     case "User":
+            //                         return `
+            //                         <span class="badge badge-primary">${data}</span>
+            //                         `
+            //                         break;
+            //                 }
 
-                        }
-                    },
-                    {
-                        render: function(data, type, row) {
-                            return `
-                            <div class="form-group">
-                                <button data-id=${row.id} name="edit"  class="btn btn-success">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button data-id=${row.id} name="delete" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        `
-                        }
-                    },
+            //             }
+            //         },
+            //         {
+            //             render: function(data, type, row) {
+            //                 return `
+            //                 <div class="form-group">
+            //                     <button data-id=${row.id} name="edit"  class="btn btn-success">
+            //                         <i class="fas fa-edit"></i>
+            //                     </button>
+            //                     <button data-id=${row.id} name="delete" class="btn btn-danger">
+            //                         <i class="fas fa-trash"></i>
+            //                     </button>
+            //                 </div>
+            //             `
+            //             }
+            //         },
 
-                ],
-            });
+            //     ],
+            // });
 
             //submit form action
             addRoomForm.on("submit", function(event) {
@@ -235,7 +269,7 @@
             })
 
 
-            editUserForm.on("submit", function(event) {
+            editRoomForm.on("submit", function(event) {
                 event.preventDefault();
                 let form = $(this);
                 let url = $(this).attr("action");
@@ -248,9 +282,10 @@
                     dataType: "JSON",
                     success: function(res) {
                         showNotification(res.message, "success", 3000);
-                        userListTable.ajax.reload();
-                        editUserModal.modal("toggle");
+                        // userListTable.ajax.reload();
+                        editRoomModal.modal("toggle");
                         form[0].reset();
+                        location.reload()
                     },
                     error: function(res) {
                         let data = res.responseJSON;
@@ -263,12 +298,12 @@
 
 
             //delete button action
-            $(document).on("click", "table#userListTable button[name='delete']", function() {
+            $(document).on("click", "button[name='delete']", function() {
                 let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Apakah kamu yakin?',
-                    text: "klik yes untuk menghapus akun.",
+                    text: "klik yes untuk menghapus ruangan.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -277,19 +312,19 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `{{ route('dashboard.user.destroy', ['']) }}/${id}`,
+                            url: `{{ route('dashboard.storage.delete.room', ['']) }}/${id}`,
                             type: "DELETE",
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             dataType: "JSON",
                             success: function(res) {
-                                userListTable.ajax.reload();
                                 showNotification(res.message, "success", 3000);
+                                location.reload()
                             },
                             error: function(res) {
                                 let data = res.responseJSON;
-                                showNotification(data.message, "error", 3000);
+                                showNotification(res.message, "error", 3000);
                             }
                         })
                     }
@@ -298,11 +333,11 @@
 
 
             //edit button action
-            $(document).on("click", "table#userListTable button[name='edit']", function() {
+            $(document).on("click", "button[name='edit']", function() {
                 let id = $(this).attr('data-id');
 
                 $.ajax({
-                    url: `{{ route('dashboard.user.show', ['']) }}/${id}`,
+                    url: `{{ route('dashboard.storage.show.room', ['']) }}/${id}`,
                     type: "GET",
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -310,21 +345,11 @@
                     dataType: "JSON",
                     success: function(res) {
                         let data = res.data;
-                        editUserModal.find("input[name='name']").val(data.name);
-                        editUserModal.find("input[name='username']").val(data.username);
-                        editUserModal.find("input[name='password']").val("");
-                        editUserModal.find("input[name='password_confirm']").val("");
+                       editRoomModal.find("input[name='name']").val(data.name);
 
-                        editUserModal.find("select[name='role'] option").each(function() {
-                            if (data.roles[0].name == $(this).val()) {
-                                $(this).attr("selected", true);
-                            } else {
-                                $(this).removeAttr("selected");
-                            }
-                        })
-                        editUserModal.modal("toggle");
-                        editUserForm.attr("action",
-                            `{{ route('dashboard.user.update', ['']) }}/${id}`)
+                       editRoomModal.modal("toggle");
+                       editRoomForm.attr("action", `{{ route('dashboard.storage.update.room', ['']) }}/${id}`)
+                       console.log('tes')
                     }
                 });
             });

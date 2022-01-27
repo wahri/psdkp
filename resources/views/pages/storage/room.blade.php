@@ -47,10 +47,10 @@
                                                                     href="#collapseLockerId{{ $eachLocker->id }}">
                                                                     Locker {{ $eachLocker->code }}
                                                                 </a>
-                                                                <button class="btn btn-warning btn-sm">
+                                                                <button class="btn btn-warning btn-sm" name="editLocker" data-id="{{ $eachLocker->id }}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
-                                                                <button class="btn btn-danger btn-sm ml-1">
+                                                                <button class="btn btn-danger btn-sm ml-1" name="deleteLocker" data-id="{{ $eachLocker->id }}">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </div>
@@ -71,11 +71,11 @@
                                                                                         href="#collapseRacksId{{ $eachRack->id }}">
                                                                                         Rak {{ $eachRack->code }}
                                                                                     </a>
-                                                                                    <button class="btn btn-warning btn-sm">
+                                                                                    <button class="btn btn-warning btn-sm" name="editRack" data-id="{{ $eachRack->id }}">
                                                                                         <i class="fas fa-edit"></i>
                                                                                     </button>
                                                                                     <button
-                                                                                        class="btn btn-danger btn-sm ml-1">
+                                                                                        class="btn btn-danger btn-sm ml-1" name="deleteRack" data-id="{{ $eachRack->id }}">
                                                                                         <i class="fas fa-trash"></i>
                                                                                     </button>
                                                                                 </div>
@@ -105,12 +105,12 @@
 
                                                                                                         </span>
                                                                                                         <button
-                                                                                                            class="btn btn-sm btn-warning">
+                                                                                                            class="btn btn-sm btn-warning" name="editBox" data-id="{{ $eachBox->id }}">
                                                                                                             <i
                                                                                                                 class="fas fa-edit "></i>
                                                                                                         </button>
                                                                                                         <button
-                                                                                                            class="btn btn-sm btn-danger ml-1">
+                                                                                                            class="btn btn-sm btn-danger ml-1" name="deleteBox" data-id="{{ $eachBox->id }}">
                                                                                                             <i
                                                                                                                 class="fas fa-trash "></i>
                                                                                                         </button>
@@ -127,17 +127,21 @@
                                                                                         </div>
                                                                                     @endforeach
                                                                                 </div>
-                                                                                <a href="#"
-                                                                                    class="btn btn-success btn-block">Tambah
-                                                                                    Box</a>
+                                                                                <button type="button" class="btn btn-block btn-success"
+                                                        data-toggle="modal" data-target="#addBoxModal"
+                                                        data-id="{{ $eachRack->id }}">
+                                                        <i class="fas fa-plus"></i> Tambah Box
+                                                    </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
                                                             </div>
-                                                            <a href="#" class="btn btn-block btn-success"><i
-                                                                    class="fas fa-plus"></i>
-                                                                Tambah Rak</a>
+                                                            <button type="button" class="btn btn-block btn-success"
+                                                        data-toggle="modal" data-target="#addRackModal"
+                                                        data-id="{{ $eachLocker->id }}">
+                                                        <i class="fas fa-plus"></i> Tambah Rak
+                                                    </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -356,6 +360,108 @@
         </div>
     </form>
 
+    {{-- edit locker modal --}}
+<form id="editLockerForm" method="POST">
+    @csrf
+    <div class="modal fade" id="editLockerModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Locker</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="code">Nama Locker :</label>
+                                <input id="code" type="text" name="code" class="form-control">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+
+{{-- edit rack modal --}}
+<form id="editRackForm" method="POST">
+    @csrf
+    <div class="modal fade" id="editRackModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Rak</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="code">Nama Rak :</label>
+                                <input id="code" type="text" name="code" class="form-control">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+
+{{-- edit box modal --}}
+<form id="editBoxForm" method="POST">
+    @csrf
+    <div class="modal fade" id="editBoxModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Box</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="code">Nama Box :</label>
+                                <input id="code" type="text" name="code" class="form-control">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+
 @endsection
 
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}
@@ -379,11 +485,15 @@
             let addLockerModal = $("div#addLockerModal");
             let addRackModal = $("div#addRackModal");
             let addBoxModal = $("div#addBoxModal");
-            let editUserModal = $("div#editUserModal");
+            let editLockerModal = $("div#editLockerModal");
+            let editRackModal = $("div#editRackModal");
+            let editBoxModal = $("div#editBoxModal");
             let addLockerForm = $("form#addLockerForm");
             let addRackForm = $("form#addRackForm");
             let addBoxForm = $("form#addBoxForm");
-            let editUserForm = $("form#editUserForm");
+            let editLockerForm = $("form#editLockerForm");
+            let editRackForm = $("form#editRackForm");
+            let editBoxForm = $("form#editBoxForm");
 
             addRackModal.on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget)
@@ -485,7 +595,7 @@
             })
 
 
-            editUserForm.on("submit", function(event) {
+            editLockerForm.on("submit", function(event) {
                 event.preventDefault();
                 let form = $(this);
                 let url = $(this).attr("action");
@@ -498,9 +608,62 @@
                     dataType: "JSON",
                     success: function(res) {
                         showNotification(res.message, "success", 3000);
-                        userListTable.ajax.reload();
-                        editUserModal.modal("toggle");
+                        editLockerModal.modal("toggle");
                         form[0].reset();
+                        location.reload()
+                    },
+                    error: function(res) {
+                        let data = res.responseJSON;
+                        showNotification(data.message, "error", 3000);
+                    }
+                })
+
+
+            })
+
+
+            editRackForm.on("submit", function(event) {
+                event.preventDefault();
+                let form = $(this);
+                let url = $(this).attr("action");
+                let data = $(this).serialize();
+
+                $.ajax({
+                    url: url,
+                    type: "PUT",
+                    data: data,
+                    dataType: "JSON",
+                    success: function(res) {
+                        showNotification(res.message, "success", 3000);
+                        editRackModal.modal("toggle");
+                        form[0].reset();
+                        location.reload()
+                    },
+                    error: function(res) {
+                        let data = res.responseJSON;
+                        showNotification(data.message, "error", 3000);
+                    }
+                })
+
+
+            })
+
+            editBoxForm.on("submit", function(event) {
+                event.preventDefault();
+                let form = $(this);
+                let url = $(this).attr("action");
+                let data = $(this).serialize();
+
+                $.ajax({
+                    url: url,
+                    type: "PUT",
+                    data: data,
+                    dataType: "JSON",
+                    success: function(res) {
+                        showNotification(res.message, "success", 3000);
+                        editBoxModal.modal("toggle");
+                        form[0].reset();
+                        location.reload()
                     },
                     error: function(res) {
                         let data = res.responseJSON;
@@ -513,12 +676,12 @@
 
 
             //delete button action
-            $(document).on("click", "table#userListTable button[name='delete']", function() {
+            $(document).on("click", "button[name='deleteLocker']", function() {
                 let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Apakah kamu yakin?',
-                    text: "klik yes untuk menghapus akun.",
+                    text: "klik yes untuk menghapus locker.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -527,15 +690,81 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `{{ route('dashboard.user.destroy', ['']) }}/${id}`,
+                            url: `{{ route('dashboard.storage.delete.locker', ['']) }}/${id}`,
                             type: "DELETE",
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             dataType: "JSON",
                             success: function(res) {
-                                userListTable.ajax.reload();
                                 showNotification(res.message, "success", 3000);
+                                location.reload()
+                            },
+                            error: function(res) {
+                                let data = res.responseJSON;
+                                showNotification(data.message, "error", 3000);
+                            }
+                        })
+                    }
+                })
+            })
+
+            $(document).on("click", "button[name='deleteRack']", function() {
+                let id = $(this).attr('data-id');
+
+                Swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "klik yes untuk menghapus rack.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `{{ route('dashboard.storage.delete.rack', ['']) }}/${id}`,
+                            type: "DELETE",
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            dataType: "JSON",
+                            success: function(res) {
+                                showNotification(res.message, "success", 3000);
+                                location.reload()
+                            },
+                            error: function(res) {
+                                let data = res.responseJSON;
+                                showNotification(data.message, "error", 3000);
+                            }
+                        })
+                    }
+                })
+            })
+
+            $(document).on("click", "button[name='deleteBox']", function() {
+                let id = $(this).attr('data-id');
+
+                Swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "klik yes untuk menghapus box.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `{{ route('dashboard.storage.delete.box', ['']) }}/${id}`,
+                            type: "DELETE",
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            dataType: "JSON",
+                            success: function(res) {
+                                showNotification(res.message, "success", 3000);
+                                location.reload()
                             },
                             error: function(res) {
                                 let data = res.responseJSON;
@@ -548,11 +777,11 @@
 
 
             //edit button action
-            $(document).on("click", "table#userListTable button[name='edit']", function() {
+            $(document).on("click", "button[name='editLocker']", function() {
                 let id = $(this).attr('data-id');
 
                 $.ajax({
-                    url: `{{ route('dashboard.user.show', ['']) }}/${id}`,
+                    url: `{{ route('dashboard.storage.show.locker', ['']) }}/${id}`,
                     type: "GET",
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -560,26 +789,57 @@
                     dataType: "JSON",
                     success: function(res) {
                         let data = res.data;
-                        editUserModal.find("input[name='name']").val(data.name);
-                        editUserModal.find("input[name='username']").val(data.username);
-                        editUserModal.find("input[name='password']").val("");
-                        editUserModal.find("input[name='password_confirm']").val("");
+                        editLockerModal.find("input[name='code']").val(data.code);
 
-                        editUserModal.find("select[name='role'] option").each(function() {
-                            if (data.roles[0].name == $(this).val()) {
-                                $(this).attr("selected", true);
-                            } else {
-                                $(this).removeAttr("selected");
-                            }
-                        })
-                        editUserModal.modal("toggle");
-                        editUserForm.attr("action",
-                            `{{ route('dashboard.user.update', ['']) }}/${id}`)
+                        editLockerModal.modal("toggle");
+                        editLockerForm.attr("action",
+                            `{{ route('dashboard.storage.update.locker', ['']) }}/${id}`)
                     }
                 });
             });
 
 
+            $(document).on("click", "button[name='editRack']", function() {
+                let id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: `{{ route('dashboard.storage.show.rack', ['']) }}/${id}`,
+                    type: "GET",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    dataType: "JSON",
+                    success: function(res) {
+                        let data = res.data;
+                        editRackModal.find("input[name='code']").val(data.code);
+
+                        editRackModal.modal("toggle");
+                        editRackForm.attr("action",
+                            `{{ route('dashboard.storage.update.rack', ['']) }}/${id}`)
+                    }
+                });
+            });
+
+            $(document).on("click", "button[name='editBox']", function() {
+                let id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: `{{ route('dashboard.storage.show.box', ['']) }}/${id}`,
+                    type: "GET",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    dataType: "JSON",
+                    success: function(res) {
+                        let data = res.data;
+                        editBoxModal.find("input[name='code']").val(data.code);
+
+                        editBoxModal.modal("toggle");
+                        editBoxForm.attr("action",
+                            `{{ route('dashboard.storage.update.box', ['']) }}/${id}`)
+                    }
+                });
+            });
         });
     </script>
 @endpush

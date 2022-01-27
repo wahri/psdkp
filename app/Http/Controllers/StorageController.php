@@ -64,6 +64,58 @@ class StorageController extends Controller
 
     }
 
+    public function showRoom($id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+
+        $roomDetail = Room::getRoomDetail($id);
+
+        if ($roomDetail->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $roomDetail;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+
+    public function updateRoom(Request $request, $id)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), Room::$updateRules, Room::$updateMessages);
+
+        if (!$validation->fails()) {
+            $saveRoom =  Room::updateRoom($validation->validated(), $id);
+
+            if ($saveRoom) {
+                $result['message'] = "Berhasil mengupdate ruangan!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
+    }
+
+    public function destroyRoom($id)
+    {
+        $room = Room::find($id);
+        $room->delete();
+
+        $result['message'] = "Berhasil menghapus akun!";
+        return response()->json($result, 200);
+
+
+    }
+
     public function StoreLocker(Request $request, $id)
     {
         $result = [];
@@ -83,6 +135,58 @@ class StorageController extends Controller
 
         $result['message'] = "{$validation->errors()->first()}";
         return response()->json($result, 400);
+
+    }
+
+    public function showLocker($id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+
+        $lockerDetail = Locker::getLockerDetail($id);
+
+        if ($lockerDetail->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $lockerDetail;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+
+    public function updateLocker(Request $request, $id)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), Locker::$updateRules, Locker::$updateMessages);
+
+        if (!$validation->fails()) {
+            $saveLocker =  Locker::updateLocker($validation->validated(), $id);
+
+            if ($saveLocker) {
+                $result['message'] = "Berhasil mengupdate Locker!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
+    }
+
+    public function destroyLocker($id)
+    {
+        $locker = Locker::find($id);
+        $locker->delete();
+
+        $result['message'] = "Berhasil menghapus locker!";
+        return response()->json($result, 200);
+
 
     }
 
@@ -111,6 +215,58 @@ class StorageController extends Controller
 
     }
 
+    public function showRack($id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+
+        $rackDetail = Rack::getRackDetail($id);
+
+        if ($rackDetail->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $rackDetail;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+
+    public function updateRack(Request $request, $id)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), Rack::$updateRules, Rack::$updateMessages);
+
+        if (!$validation->fails()) {
+            $saveRack =  Rack::updateRack($validation->validated(), $id);
+
+            if ($saveRack) {
+                $result['message'] = "Berhasil mengupdate Rack!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
+    }
+
+    public function destroyRack($id)
+    {
+        $rack = Rack::find($id);
+        $rack->delete();
+
+        $result['message'] = "Berhasil menghapus rack!";
+        return response()->json($result, 200);
+
+
+    }
+
     public function StoreBox(Request $request)
     {
         $result = [];
@@ -135,6 +291,59 @@ class StorageController extends Controller
         return response()->json($result, 400);
 
     }
+
+    public function showBox($id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+
+        $boxDetail = Box::getBoxDetail($id);
+
+        if ($boxDetail->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $boxDetail;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+
+    public function updateBox(Request $request, $id)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), Box::$updateRules, Box::$updateMessages);
+
+        if (!$validation->fails()) {
+            $saveBox =  Box::updateBox($validation->validated(), $id);
+
+            if ($saveBox) {
+                $result['message'] = "Berhasil mengupdate Box!";
+                return response()->json($result, 200);
+            }
+        }
+
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
+    }
+
+    public function destroyBox($id)
+    {
+        $box = Box::find($id);
+        $box->delete();
+
+        $result['message'] = "Berhasil menghapus box!";
+        return response()->json($result, 200);
+
+
+    }
+
 
 
     public function locker(Room $room, Locker $locker)
