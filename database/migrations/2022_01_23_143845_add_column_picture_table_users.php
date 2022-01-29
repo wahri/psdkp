@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FormDesign extends Migration
+class AddColumnPictureTableUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class FormDesign extends Migration
      */
     public function up()
     {
-        Schema::create('form_design', function (Blueprint $table) {
-            $table->id();
-            $table->json('field');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('picture')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class FormDesign extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_design');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('picture');
+        });
     }
 }
