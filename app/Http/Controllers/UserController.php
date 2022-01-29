@@ -140,7 +140,7 @@ class UserController extends Controller
 
         $query =  User::with('roles')->select("users.*")
             ->whereHas('roles', function ($query) {
-                return $query->where('name', '!=', 'Super Admin')->select('*');
+                return $query->where('name', '!=', 'Super Admin');
             });
 
 

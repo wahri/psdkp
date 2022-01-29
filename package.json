@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "admin-lte": "3.1",
+        "bootstrap-icons": "^1.7.2",
         "moment": "^2.29.1",
         "noty": "^3.2.0-beta-deprecated",
         "sweetalert2": "^11.3.6"

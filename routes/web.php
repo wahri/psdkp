@@ -3,9 +3,11 @@
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentFormatController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use League\CommonMark\Node\Block\Document;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,7 @@ Auth::routes();
 
 
 /*
-   ** ROUTE NAMING **
+** ROUTE NAMING **
    note: naming use prefix dashboard.
    example : dashboard.user.index
 */
@@ -41,8 +43,10 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     });
 
     // ROUTE FOR DOCUMENT CATEGORY
-    Route::resource('category', CategoryDocumentController::class);
-    Route::prefix('category')->group(function () {
+    Route::prefix('document-format')->name('document-format.')->group(function () {
+        Route::get("/", [DocumentFormatController::class, 'index'])->name('index');
+        Route::get("/create", [DocumentFormatController::class, 'create'])->name('create');
+        Route::post("/store", [DocumentFormatController::class, 'store'])->name('store');
     });
 
 

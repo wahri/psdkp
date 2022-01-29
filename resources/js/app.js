@@ -1,5 +1,6 @@
 require("admin-lte");
 import "sweetalert2/src/sweetalert2.scss";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 window.Noty = require("noty");
 
