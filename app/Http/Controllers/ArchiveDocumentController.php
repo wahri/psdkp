@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentType;
 use Illuminate\Http\Request;
 
 class ArchiveDocumentController extends Controller
@@ -23,6 +24,7 @@ class ArchiveDocumentController extends Controller
      */
     public function index()
     {
+        $document_type = DocumentType::all();
         return view('pages.archive.index');
     }
     public function create()

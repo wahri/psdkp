@@ -10,4 +10,9 @@ class DocumentType extends Model
     use HasFactory;
 
     protected $guarded = "id";
+
+    public function inputFormats()
+    {
+        return $this->hasMany(InputFormat::class);
+    }
 }

@@ -40,37 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="card card-secondary">
-                            <div class="card-header">
-                                <h3 class="card-title">User Management</h3>
-                            </div>
-                            <div class="card-body">
-                                <a href="/dashboard/archive/create" class="btn btn-success btn-sm mb-3">
-                                    <i class="fas fa-plus mr-2"></i>New User
-                                </a>
-                                <table id="userListTable" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Username</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
-                                            <th>Role</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
