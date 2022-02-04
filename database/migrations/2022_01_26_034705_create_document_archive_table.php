@@ -34,7 +34,7 @@ class CreateDocumentArchiveTable extends Migration
             $table->foreign('document_archive_id')->references('id')->on('document_archives')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('input_format_id')->nullable();
             $table->foreign('input_format_id')->references('id')->on('input_formats')->onDelete('set null')->onUpdate('cascade');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }

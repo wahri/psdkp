@@ -31,4 +31,9 @@ class DocumentArchive extends Model
     {
         return $this->belongsTo(Box::class);
     }
+
+    public function documentInfos()
+    {
+        return $this->hasMany(DocumentArchiveInfo::class);
+    }
 }

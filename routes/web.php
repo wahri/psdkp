@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ArchiveDocumentController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
@@ -39,8 +38,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // ROUTE FOR ARCHIVE
-    Route::prefix('archive')->group(function () {
-        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('archive');
+    Route::prefix('archive')->name('archive.')->group(function () {
+        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('index');
+        Route::get('/{typeDocument_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('typeDocument');
         Route::get('/create', [ArchiveDocumentController::class, 'create'])->name('create');
     });
 

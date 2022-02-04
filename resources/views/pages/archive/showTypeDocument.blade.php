@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Arsip Dokumen</h1>
+                        <h1 class="m-0">{{ $typeDocument->name }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -33,27 +33,41 @@
                                 <h3 class="card-title">Daftar Kategori Arsip Dokumen</h3>
                             </div>
                             <div class="card-body">
-                                <table id="typeDocument" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama Dokumen</th>
-                                            <th width="10%" class="text-center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($document_type as $eachDocumentType)
-                                            <tr>
-                                                <td>
-                                                    {{ $eachDocumentType['name'] }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="/dashboard/archive/{{ $eachDocumentType['id'] }}"
-                                                        class="btn btn-info">Pilih Dokumen</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="" class="btn btn-success">
+                                            <i class="fas fa-plus"></i> Tambah Dokumen
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <table id="typeDocumentById" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    @foreach ($inputFormat as $eachInput)
+                                                        <th>{{ $eachInput['name'] }}</th>
+                                                    @endforeach
+                                                    <th width="10%" class="text-center">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($documentArchive as $eachDocument)
+                                                    <tr>
+                                                        @foreach ($eachDocument->documentInfos as $eachInfo)
+                                                            <td>{{ $eachInfo['value'] }}</td>
+                                                        @endforeach
+                                                        <td class="text-center">
+                                                            <a href="" class="btn btn-warning">Edit</a>
+                                                            <a href="" class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,9 +77,6 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-
-
 @endsection
 
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}
@@ -87,16 +98,8 @@
 
     <script>
         $(function() {
-            // $("#example1").DataTable({
-            //     "responsive": true,
-            //     "lengthChange": false,
-            //     "autoWidth": false,
-            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $("#typeDocument").DataTable({
+            $("#typeDocumentById").DataTable({
                 "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false
             })
         });
     </script>
