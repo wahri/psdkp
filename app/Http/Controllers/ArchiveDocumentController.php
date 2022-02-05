@@ -30,10 +30,10 @@ class ArchiveDocumentController extends Controller
         return view('pages.archive.index', compact('document_type'));
     }
 
-    public function showTypeDocument($typeDocument_id)
+    public function showTypeDocument($documentType_id)
     {
-        $typeDocument = DocumentType::find($typeDocument_id);
-        $inputFormat = InputFormat::where('document_type_id', $typeDocument_id)->get();
+        $typeDocument = DocumentType::find($documentType_id);
+        $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
 
         $listDocument = [
             "1" => [
@@ -65,12 +65,15 @@ class ArchiveDocumentController extends Controller
         // }
         // $query .= "FROM ";
 
-        $documentArchive = DocumentArchive::where('document_type_id', $typeDocument_id)->with('documentInfos')->get();
+        $documentArchive = DocumentArchive::where('document_type_id', $documentType_id)->with('documentInfos')->get();
 
         return view('pages.archive.showTypeDocument', compact(['typeDocument', 'inputFormat', 'documentArchive']));
     }
-    public function create()
+
+    public function create($documentType_id)
     {
-        return view('pages.archive.create');
+        $documentType = DocumentType::find($documentType_id);
+        $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
+        return view('pages.archive.createDocument', compact(['documentType', 'inputFormat']));
     }
 }

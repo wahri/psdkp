@@ -40,8 +40,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     // ROUTE FOR ARCHIVE
     Route::prefix('archive')->name('archive.')->group(function () {
         Route::get('/', [ArchiveDocumentController::class, 'index'])->name('index');
-        Route::get('/{typeDocument_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('typeDocument');
-        Route::get('/create', [ArchiveDocumentController::class, 'create'])->name('create');
+        Route::get('/{documentType_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('show.document');
+        Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
     });
 
     // ROUTE FOR LOCKER

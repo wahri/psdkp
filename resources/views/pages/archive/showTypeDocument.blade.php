@@ -28,14 +28,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Daftar Kategori Arsip Dokumen</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <a href="" class="btn btn-success">
+                                        <a href="/dashboard/archive/create/{{ $typeDocument->id }}"
+                                            class="btn btn-success">
                                             <i class="fas fa-plus"></i> Tambah Dokumen
                                         </a>
                                     </div>

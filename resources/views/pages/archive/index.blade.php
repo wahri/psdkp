@@ -28,7 +28,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Daftar Kategori Arsip Dokumen</h3>
                             </div>
