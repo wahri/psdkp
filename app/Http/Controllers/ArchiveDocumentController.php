@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Box;
 use App\Models\DocumentArchive;
+use App\Models\DocumentArchiveInfo;
 use App\Models\DocumentType;
 use App\Models\InputFormat;
+use App\Models\Locker;
+use App\Models\Rack;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ArchiveDocumentController extends Controller
 {
@@ -35,30 +41,6 @@ class ArchiveDocumentController extends Controller
         $typeDocument = DocumentType::find($documentType_id);
         $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
 
-        $listDocument = [
-            "1" => [
-                "title1" => "value11",
-                "title2" => "value12",
-                "title3" => "value13",
-                "title4" => "value14",
-                "title5" => "value15"
-            ],
-            "2" => [
-                "title1" => "value21",
-                "title2" => "value22",
-                "title3" => "value23",
-                "title4" => "value24",
-                "title5" => "value25"
-            ],
-            "3" => [
-                "title1" => "value31",
-                "title2" => "value32",
-                "title3" => "value33",
-                "title4" => "value34",
-                "title5" => "value35"
-            ]
-        ];
-
         // $query = "SELECT";
         // foreach ($inputFormat as $each) {
         //     $query .= " IF(input_format_id='" . $each['id'] . "', value, NULL)"  . " AS " . strtolower(str_replace(" ", "_", $each->name)) . ",";
@@ -74,6 +56,105 @@ class ArchiveDocumentController extends Controller
     {
         $documentType = DocumentType::find($documentType_id);
         $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
-        return view('pages.archive.createDocument', compact(['documentType', 'inputFormat']));
+        $rooms = Room::all();
+        return view('pages.archive.createDocument', compact(['documentType', 'inputFormat', 'rooms']));
+    }
+
+    public function storeDocument(Request $request)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $data = $request->all();
+
+        $fileDocument = $request->file('fileDocument');
+        $fileName = time() . "_" . $fileDocument->getClientOriginalName();
+
+        $uploadFolder = 'fileDocument';
+        $fileDocument->move($uploadFolder, $fileName);
+
+        // upload document
+        $saveDocument = new DocumentArchive();
+        $saveDocument->document_type_id = $data['document_type_id'];
+        $saveDocument->room_id = $data['room_id'];
+        $saveDocument->locker_id = $data['locker_id'];
+        $saveDocument->rack_id = $data['rack_id'];
+        $saveDocument->box_id = $data['box_id'];
+        $saveDocument->file = $fileName;
+        $saveDocument->save();
+
+        // upload info document
+        $documentInfo = [];
+        for ($i = 0; $i < count($data['input_format_id']); $i++) {
+            $getData["document_archive_id"] = $saveDocument->id;
+            $getData["input_format_id"] = $data["input_format_id"][$i];
+            $getData["value"] = $data["value"][$i];
+
+            array_push($documentInfo, $getData);
+        }
+        $saveDocumentInfo = DocumentArchiveInfo::insert($documentInfo);
+
+        if ($saveDocument && $saveDocumentInfo) {
+            // $result['message'] = "Berhasil mendaftarkan user!";
+            // response()->json($result, 200);
+
+            redirect()->route('dashboard.archive.index');
+        }
+    }
+
+    public function getLockersByRoomID($room_id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+        $lockers = Locker::where('room_id', $room_id)->get();
+
+        if ($lockers->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $lockers;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+
+    public function getRacksByLockerID($locker_id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+        $racks = Rack::where('locker_id', $locker_id)->get();
+
+        if ($racks->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $racks;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
+    }
+    public function getBoxesByRackID($rack_id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+        $boxes = Box::where('rack_id', $rack_id)->get();
+
+        if ($boxes->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $boxes;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 400);
     }
 }

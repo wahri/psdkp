@@ -42,6 +42,14 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/', [ArchiveDocumentController::class, 'index'])->name('index');
         Route::get('/{documentType_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('show.document');
         Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
+        Route::post('/storeDocument', [ArchiveDocumentController::class, 'storeDocument'])->name('store.document');
+
+        //ROUTE FOR JSON RESPONSE
+        Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
+            Route::get('lockers/{room_id}', [ArchiveDocumentController::class, 'getLockersByRoomID'])->name('lockers');
+            Route::get('racks/{locker_id}', [ArchiveDocumentController::class, 'getRacksByLockerID'])->name('racks');
+            Route::get('boxes/{rack_id}', [ArchiveDocumentController::class, 'getBoxesByRackID'])->name('boxes');
+        });
     });
 
     // ROUTE FOR LOCKER
