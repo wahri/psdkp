@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ArchiveDocumentController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
@@ -41,9 +40,23 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // ROUTE FOR ARCHIVE
-    Route::prefix('archive')->group(function () {
-        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('archive');
-        Route::get('/create', [ArchiveDocumentController::class, 'create'])->name('create');
+    Route::prefix('archive')->name('archive.')->group(function () {
+        Route::get('/', [ArchiveDocumentController::class, 'index'])->name('index');
+        Route::get('/{documentType_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('show.document');
+        Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
+        Route::post('/storeDocument', [ArchiveDocumentController::class, 'storeDocument'])->name('store.document');
+        Route::get('/edit/{documentType_id}', [ArchiveDocumentController::class, 'edit'])->name('edit.document');
+        Route::put('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
+        Route::delete('/deleteDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deleteDocument'])->name('delete.document');
+
+        Route::get('/trash/{documentType_id}', [ArchiveDocumentController::class, 'trashDocument'])->name('trash.document');
+
+        //ROUTE FOR JSON RESPONSE
+        Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
+            Route::get('lockers/{room_id}', [ArchiveDocumentController::class, 'getLockersByRoomID'])->name('lockers');
+            Route::get('racks/{locker_id}', [ArchiveDocumentController::class, 'getRacksByLockerID'])->name('racks');
+            Route::get('boxes/{rack_id}', [ArchiveDocumentController::class, 'getBoxesByRackID'])->name('boxes');
+        });
     });
 
     // ROUTE FOR LOCKER
