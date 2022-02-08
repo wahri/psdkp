@@ -26,7 +26,10 @@ class CreateDocumentArchiveTable extends Migration
             $table->unsignedBigInteger('box_id')->nullable();
             $table->foreign('box_id')->references('id')->on('boxes')->onDelete('set null')->onUpdate('cascade');
             $table->string('file');
+            // $table->boolean('is_deleted')->default(0);
+
             $table->timestamps();
+            $table->softDeletes();
         });
         Schema::create('document_archive_infos', function (Blueprint $table) {
             $table->id();

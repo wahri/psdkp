@@ -43,6 +43,11 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/{documentType_id}', [ArchiveDocumentController::class, 'showTypeDocument'])->name('show.document');
         Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
         Route::post('/storeDocument', [ArchiveDocumentController::class, 'storeDocument'])->name('store.document');
+        Route::get('/edit/{documentType_id}', [ArchiveDocumentController::class, 'edit'])->name('edit.document');
+        Route::put('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
+        Route::delete('/deleteDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deleteDocument'])->name('delete.document');
+
+        Route::get('/trash/{documentType_id}', [ArchiveDocumentController::class, 'trashDocument'])->name('trash.document');
 
         //ROUTE FOR JSON RESPONSE
         Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {

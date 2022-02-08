@@ -11,6 +11,7 @@ use App\Models\Locker;
 use App\Models\Rack;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ArchiveDocumentController extends Controller
@@ -50,6 +51,24 @@ class ArchiveDocumentController extends Controller
         $documentArchive = DocumentArchive::where('document_type_id', $documentType_id)->with('documentInfos')->get();
 
         return view('pages.archive.showTypeDocument', compact(['typeDocument', 'inputFormat', 'documentArchive']));
+    }
+
+    public function trashDocument($documentType_id)
+    {
+        $typeDocument = DocumentType::find($documentType_id);
+        $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
+
+        // $query = "SELECT";
+        // foreach ($inputFormat as $each) {
+        //     $query .= " IF(input_format_id='" . $each['id'] . "', value, NULL)"  . " AS " . strtolower(str_replace(" ", "_", $each->name)) . ",";
+        // }
+        // $query .= "FROM ";
+
+        $documentArchive = DocumentArchive::where('document_type_id', $documentType_id)->with('documentInfos')->onlyTrashed()->get();
+
+        // dd($documentArchive);
+
+        return view('pages.archive.showTrashTypeDocument', compact(['typeDocument', 'inputFormat', 'documentArchive']));
     }
 
     public function create($documentType_id)
@@ -98,8 +117,68 @@ class ArchiveDocumentController extends Controller
             // $result['message'] = "Berhasil mendaftarkan user!";
             // response()->json($result, 200);
 
-            redirect()->route('dashboard.archive.index');
+            return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $data['document_type_id']]);
         }
+    }
+
+    public function edit($documentArchive_id)
+    {
+        $documentArchive = DocumentArchive::with(['documentInfos', 'documentInfos.inputFormat'])->find($documentArchive_id);
+
+        // dd($documentArchive);
+        $documentType = DocumentType::find($documentArchive->document_type_id);
+        $inputFormat = InputFormat::where('document_type_id', $documentArchive->document_type_id)->get();
+
+        $rooms = Room::all();
+        $lockers = Locker::where('room_id', $documentArchive->room_id)->get();
+        $racks = Rack::where('locker_id', $documentArchive->locker_id)->get();
+        $boxes = Box::where('rack_id', $documentArchive->rack_id)->get();
+
+        return view('pages.archive.editDocument', compact(['documentType', 'inputFormat', 'rooms', 'lockers', 'racks', 'boxes', 'documentArchive']));
+    }
+
+    public function updateDocument(Request $request)
+    {
+        $result = [];
+        $result['code'] = 400;
+
+        $data = $request->all();
+        $fileDocument = $request->file('fileDocument');
+
+        $documentArchive = DocumentArchive::findOrFail($data['document_archive_id']);
+
+        // dd($documentArchive);
+
+        if (!empty($fileDocument)) {
+            File::delete("fileDocument/" . $documentArchive->file);
+            $fileName = time() . "_" . $fileDocument->getClientOriginalName();
+            $uploadFolder = 'fileDocument';
+            $fileDocument->move($uploadFolder, $fileName);
+
+            $documentArchive->file = $fileName;
+        }
+        $documentArchive->room_id = $data['room_id'];
+        $documentArchive->locker_id = $data['locker_id'];
+        $documentArchive->rack_id = $data['rack_id'];
+        $documentArchive->box_id = $data['box_id'];
+        $documentArchive->save();
+
+        for ($i = 0; $i < count($data['input_format_id']); $i++) {
+            $documentArchiveInfo = DocumentArchiveInfo::findOrFail($data['input_format_id'][$i]);
+            $documentArchiveInfo->value = $data['value'][$i];
+            $documentArchiveInfo->save();
+        }
+
+
+        return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $data['document_type_id']]);
+    }
+
+    public function deleteDocument($documentArchive_id)
+    {
+        $document = DocumentArchive::findOrFail($documentArchive_id);
+        $document->delete();
+
+        return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $document->document_type_id]);
     }
 
     public function getLockersByRoomID($room_id)

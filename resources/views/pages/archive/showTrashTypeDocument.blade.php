@@ -10,7 +10,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ $typeDocument->name }}</h1>
+                        {{-- <h1 class="m-0">{{ $typeDocument->name }}</h1> --}}
+                        <a href="/dashboard/archive/{{ $typeDocument->id }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                        </a>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,26 +31,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card card-primary">
+                        <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Daftar Kategori Arsip Dokumen</h3>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <a href="/dashboard/archive/create/{{ $typeDocument->id }}"
-                                            class="btn btn-success">
-                                            <i class="fas fa-plus"></i> Tambah Dokumen
-                                        </a>
-                                    </div>
-                                    <div class="col text-right">
-                                        <a href="{{ route('dashboard.archive.trash.document', [$typeDocument->id]) }}"
-                                            class="btn btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-
-                                    </div>
-                                </div>
                                 <div class="row mt-3">
                                     <div class="col">
                                         <table id="typeDocumentById" class="table table-bordered table-hover">
