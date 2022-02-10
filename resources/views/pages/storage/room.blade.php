@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USER')
+@section('title', 'PSDKP | Tempat Penyimpanan')
 
 @section('content')
     <div class="content-wrapper">
@@ -47,10 +47,12 @@
                                                                     href="#collapseLockerId{{ $eachLocker->id }}">
                                                                     Locker {{ $eachLocker->code }}
                                                                 </a>
-                                                                <button class="btn btn-warning btn-sm" name="editLocker" data-id="{{ $eachLocker->id }}">
+                                                                <button class="btn btn-warning btn-sm" name="editLocker"
+                                                                    data-id="{{ $eachLocker->id }}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
-                                                                <button class="btn btn-danger btn-sm ml-1" name="deleteLocker" data-id="{{ $eachLocker->id }}">
+                                                                <button class="btn btn-danger btn-sm ml-1"
+                                                                    name="deleteLocker" data-id="{{ $eachLocker->id }}">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </div>
@@ -71,11 +73,15 @@
                                                                                         href="#collapseRacksId{{ $eachRack->id }}">
                                                                                         Rak {{ $eachRack->code }}
                                                                                     </a>
-                                                                                    <button class="btn btn-warning btn-sm" name="editRack" data-id="{{ $eachRack->id }}">
+                                                                                    <button class="btn btn-warning btn-sm"
+                                                                                        name="editRack"
+                                                                                        data-id="{{ $eachRack->id }}">
                                                                                         <i class="fas fa-edit"></i>
                                                                                     </button>
                                                                                     <button
-                                                                                        class="btn btn-danger btn-sm ml-1" name="deleteRack" data-id="{{ $eachRack->id }}">
+                                                                                        class="btn btn-danger btn-sm ml-1"
+                                                                                        name="deleteRack"
+                                                                                        data-id="{{ $eachRack->id }}">
                                                                                         <i class="fas fa-trash"></i>
                                                                                     </button>
                                                                                 </div>
@@ -105,12 +111,16 @@
 
                                                                                                         </span>
                                                                                                         <button
-                                                                                                            class="btn btn-sm btn-warning" name="editBox" data-id="{{ $eachBox->id }}">
+                                                                                                            class="btn btn-sm btn-warning"
+                                                                                                            name="editBox"
+                                                                                                            data-id="{{ $eachBox->id }}">
                                                                                                             <i
                                                                                                                 class="fas fa-edit "></i>
                                                                                                         </button>
                                                                                                         <button
-                                                                                                            class="btn btn-sm btn-danger ml-1" name="deleteBox" data-id="{{ $eachBox->id }}">
+                                                                                                            class="btn btn-sm btn-danger ml-1"
+                                                                                                            name="deleteBox"
+                                                                                                            data-id="{{ $eachBox->id }}">
                                                                                                             <i
                                                                                                                 class="fas fa-trash "></i>
                                                                                                         </button>
@@ -127,21 +137,24 @@
                                                                                         </div>
                                                                                     @endforeach
                                                                                 </div>
-                                                                                <button type="button" class="btn btn-block btn-success"
-                                                        data-toggle="modal" data-target="#addBoxModal"
-                                                        data-id="{{ $eachRack->id }}">
-                                                        <i class="fas fa-plus"></i> Tambah Box
-                                                    </button>
+                                                                                <button type="button"
+                                                                                    class="btn btn-block btn-success"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#addBoxModal"
+                                                                                    data-id="{{ $eachRack->id }}">
+                                                                                    <i class="fas fa-plus"></i> Tambah
+                                                                                    Box
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
                                                             </div>
                                                             <button type="button" class="btn btn-block btn-success"
-                                                        data-toggle="modal" data-target="#addRackModal"
-                                                        data-id="{{ $eachLocker->id }}">
-                                                        <i class="fas fa-plus"></i> Tambah Rak
-                                                    </button>
+                                                                data-toggle="modal" data-target="#addRackModal"
+                                                                data-id="{{ $eachLocker->id }}">
+                                                                <i class="fas fa-plus"></i> Tambah Rak
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,8 +324,8 @@
                                     <input id="codeRack" type="text" name="code" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                <input id="locker_id" type="hidden" name="locker_id" class="form-control" value="">
-                            </div>
+                                    <input id="locker_id" type="hidden" name="locker_id" class="form-control" value="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -344,8 +357,8 @@
                                     <input id="codeBox" type="text" name="code" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                <input id="rack_id" type="hidden" name="rack_id" class="form-control" value="">
-                            </div>
+                                    <input id="rack_id" type="hidden" name="rack_id" class="form-control" value="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -361,106 +374,106 @@
     </form>
 
     {{-- edit locker modal --}}
-<form id="editLockerForm" method="POST">
-    @csrf
-    <div class="modal fade" id="editLockerModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Locker</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="code">Nama Locker :</label>
-                                <input id="code" type="text" name="code" class="form-control">
+    <form id="editLockerForm" method="POST">
+        @csrf
+        <div class="modal fade" id="editLockerModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Locker</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="code">Nama Locker :</label>
+                                    <input id="code" type="text" name="code" class="form-control">
+                                </div>
+
                             </div>
 
                         </div>
 
+
                     </div>
-
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
+    </form>
 
-{{-- edit rack modal --}}
-<form id="editRackForm" method="POST">
-    @csrf
-    <div class="modal fade" id="editRackModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Rak</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="code">Nama Rak :</label>
-                                <input id="code" type="text" name="code" class="form-control">
+    {{-- edit rack modal --}}
+    <form id="editRackForm" method="POST">
+        @csrf
+        <div class="modal fade" id="editRackModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Rak</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="code">Nama Rak :</label>
+                                    <input id="code" type="text" name="code" class="form-control">
+                                </div>
+
                             </div>
 
                         </div>
 
+
                     </div>
-
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
+    </form>
 
-{{-- edit box modal --}}
-<form id="editBoxForm" method="POST">
-    @csrf
-    <div class="modal fade" id="editBoxModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Box</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="code">Nama Box :</label>
-                                <input id="code" type="text" name="code" class="form-control">
+    {{-- edit box modal --}}
+    <form id="editBoxForm" method="POST">
+        @csrf
+        <div class="modal fade" id="editBoxModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Box</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="code">Nama Box :</label>
+                                    <input id="code" type="text" name="code" class="form-control">
+                                </div>
+
                             </div>
 
                         </div>
 
+
                     </div>
-
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
+    </form>
 
 @endsection
 

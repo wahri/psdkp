@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USER')
+@section('title', 'PSDKP | Dokumen yang dihapus')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -51,7 +51,7 @@
                                                     <th>Rack</th>
                                                     <th>Box</th>
                                                     <th>File Document</th>
-                                                    <th width="10%" class="text-center">Aksi</th>
+                                                    <th width="15%" class="text-center">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -71,14 +71,14 @@
                                                                 class="btn btn-info btn-sm" target="_blank">Download</a>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ route('dashboard.archive.edit.document', $eachDocument->id) }}"
-                                                                class="btn btn-warning btn-sm">Edit</a>
+                                                            <a href="{{ route('dashboard.archive.restore.document', ['documentArchive_id' => $eachDocument->id]) }}"
+                                                                class="btn btn-info btn-sm">Restore</a>
                                                             <form method="POST" class="d-inline"
                                                                 onsubmit="return confirm('Move data to trash?')"
-                                                                action="{{ route('dashboard.archive.delete.document', [$eachDocument->id]) }}">
+                                                                action="{{ route('dashboard.archive.deletePermanent.document', [$eachDocument->id]) }}">
                                                                 @csrf
                                                                 <input type="hidden" value="DELETE" name="_method">
-                                                                <input type="submit" value="Delete"
+                                                                <input type="submit" value="Delete Permanent"
                                                                     class="btn btn-danger btn-sm">
                                                             </form>
                                                         </td>

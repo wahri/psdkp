@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USER')
+@section('title', 'PSDKP | Pengarsipan Dokumen')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USERS')
+@section('title', 'PSDKP | Edit Dokumen')
 
 @section('content')
     <div class="content-wrapper">
@@ -287,6 +287,11 @@
                 $('#fileDocument').show()
             })
 
+            $('input[type=file]').on('change', () => {
+                var filename = $('input[type=file]').val().split('\\').pop();
+                console.log(filename);
+                $('label[for=fileDocument]').text(filename)
+            })
         })
     </script>
 @endpush

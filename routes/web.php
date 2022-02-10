@@ -44,8 +44,10 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
         Route::post('/storeDocument', [ArchiveDocumentController::class, 'storeDocument'])->name('store.document');
         Route::get('/edit/{documentType_id}', [ArchiveDocumentController::class, 'edit'])->name('edit.document');
-        Route::put('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
+        Route::post('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
         Route::delete('/deleteDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deleteDocument'])->name('delete.document');
+        Route::get('/restoreDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'restoreDocument'])->name('restore.document');
+        Route::delete('/deletePermanentDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deletePermanentDocument'])->name('deletePermanent.document');
 
         Route::get('/trash/{documentType_id}', [ArchiveDocumentController::class, 'trashDocument'])->name('trash.document');
 

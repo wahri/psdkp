@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USER')
+@section('title', 'PSDKP | Tempat Penyimpanan')
 
 @section('content')
     <div class="content-wrapper">
@@ -28,7 +28,8 @@
                 <div class="row">
                     <div class="col-lg-12">
 
-                        <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal" data-target="#addRoomModal">
+                        <button type="button" class="btn btn-success btn-sm mb-4" data-toggle="modal"
+                            data-target="#addRoomModal">
                             <i class="fas fa-plus mr-2"></i> Tambah Ruangan
                         </button>
                         <div class="row">
@@ -42,10 +43,12 @@
                                             <span class="info-box-text d-flex justify-content-between">
                                                 {{ $ruang->name }}
                                                 <div class="text-right">
-                                                    <button class="btn btn-sm btn-warning" name="edit" data-id="{{ $ruang->id }}">
+                                                    <button class="btn btn-sm btn-warning" name="edit"
+                                                        data-id="{{ $ruang->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <button class="btn btn-sm btn-danger" name="delete" data-id="{{ $ruang->id }}">
+                                                    <button class="btn btn-sm btn-danger" name="delete"
+                                                        data-id="{{ $ruang->id }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
 
@@ -69,73 +72,73 @@
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
-             {{-- add room modal --}}
-            </div>
+            {{-- add room modal --}}
+        </div>
         <!-- /.content -->
     </div>
 
-   {{-- add room modal --}}
-   <form action="{{ route('dashboard.storage.create.room') }}" id="addRoomForm" method="post">
-    @csrf
-    <div class="modal fade" id="addRoomModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">New Room</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name">Nama Ruang :</label>
-                                <input id="name" type="text" name="name" class="form-control">
+    {{-- add room modal --}}
+    <form action="{{ route('dashboard.storage.create.room') }}" id="addRoomForm" method="post">
+        @csrf
+        <div class="modal fade" id="addRoomModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Room</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="name">Nama Ruang :</label>
+                                    <input id="name" type="text" name="name" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
+    </form>
 
-{{-- edit room modal --}}
-<form id="editRoomForm" method="POST">
-    @csrf
-    <div class="modal fade" id="editRoomModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Ruang</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name">Nama Ruang :</label>
-                                <input id="name" type="text" name="name" class="form-control">
+    {{-- edit room modal --}}
+    <form id="editRoomForm" method="POST">
+        @csrf
+        <div class="modal fade" id="editRoomModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Ruang</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="name">Nama Ruang :</label>
+                                    <input id="name" type="text" name="name" class="form-control">
+                                </div>
                             </div>
+
                         </div>
 
+
                     </div>
-
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
+    </form>
 
 @endsection
 
@@ -209,14 +212,14 @@
             //                 switch (data) {
             //                     case "Admin":
             //                         return `
-            //                     <span class="badge badge-success">${data}</span>
-            //                     `
+        //                     <span class="badge badge-success">${data}</span>
+        //                     `
             //                         break;
 
             //                     case "User":
             //                         return `
-            //                         <span class="badge badge-primary">${data}</span>
-            //                         `
+        //                         <span class="badge badge-primary">${data}</span>
+        //                         `
             //                         break;
             //                 }
 
@@ -225,15 +228,15 @@
             //         {
             //             render: function(data, type, row) {
             //                 return `
-            //                 <div class="form-group">
-            //                     <button data-id=${row.id} name="edit"  class="btn btn-success">
-            //                         <i class="fas fa-edit"></i>
-            //                     </button>
-            //                     <button data-id=${row.id} name="delete" class="btn btn-danger">
-            //                         <i class="fas fa-trash"></i>
-            //                     </button>
-            //                 </div>
-            //             `
+        //                 <div class="form-group">
+        //                     <button data-id=${row.id} name="edit"  class="btn btn-success">
+        //                         <i class="fas fa-edit"></i>
+        //                     </button>
+        //                     <button data-id=${row.id} name="delete" class="btn btn-danger">
+        //                         <i class="fas fa-trash"></i>
+        //                     </button>
+        //                 </div>
+        //             `
             //             }
             //         },
 
@@ -345,11 +348,12 @@
                     dataType: "JSON",
                     success: function(res) {
                         let data = res.data;
-                       editRoomModal.find("input[name='name']").val(data.name);
+                        editRoomModal.find("input[name='name']").val(data.name);
 
-                       editRoomModal.modal("toggle");
-                       editRoomForm.attr("action", `{{ route('dashboard.storage.update.room', ['']) }}/${id}`)
-                       console.log('tes')
+                        editRoomModal.modal("toggle");
+                        editRoomForm.attr("action",
+                            `{{ route('dashboard.storage.update.room', ['']) }}/${id}`)
+                        console.log('tes')
                     }
                 });
             });

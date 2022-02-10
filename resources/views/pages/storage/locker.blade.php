@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PSDKP | USER')
+@section('title', 'PSDKP | Tempat Penyimpanan')
 
 @section('content')
     <div class="content-wrapper">

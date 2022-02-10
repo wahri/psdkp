@@ -181,6 +181,22 @@ class ArchiveDocumentController extends Controller
         return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $document->document_type_id]);
     }
 
+    public function deletePermanentDocument($documentArchive_id)
+    {
+        $document = DocumentArchive::onlyTrashed()->findOrFail($documentArchive_id);
+        $document->forceDelete();
+
+        return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $document->document_type_id]);
+    }
+    public function restoreDocument($documentArchive_id)
+    {
+        $document = DocumentArchive::onlyTrashed()->findOrFail($documentArchive_id);
+
+        $document->restore();
+
+        return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $document->document_type_id]);
+    }
+
     public function getLockersByRoomID($room_id)
     {
         $result = [];
