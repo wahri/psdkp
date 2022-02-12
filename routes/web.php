@@ -5,6 +5,7 @@ use App\Http\Controllers\ArchiveDocumentController;
 use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentFormatController;
+use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\LockerController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
@@ -28,7 +29,11 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+]);
 
 
 
@@ -73,10 +78,16 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     });
 
     // ROUTE FOR DOCUMENT CATEGORY
-    Route::prefix('document-format')->name('document-format.')->group(function () {
-        Route::get("/", [DocumentFormatController::class, 'index'])->name('index');
-        Route::get("/create", [DocumentFormatController::class, 'create'])->name('create');
-        Route::post("/store", [DocumentFormatController::class, 'store'])->name('store');
+    Route::prefix('document-type')->name('document-type.')->group(function () {
+        Route::get("/", [DocumentTypeController::class, 'index'])->name('index');
+        Route::get("/create", [DocumentTypeController::class, 'create'])->name('create');
+        Route::post("/store", [DocumentTypeController::class, 'store'])->name('store');
+        Route::delete("/{documentType}", [DocumentTypeController::class, 'destroy'])->name('destroy');
+
+        //ROUTE FOR JSON RESPONSE
+        Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
+            Route::post('document-type-datatable', [DocumentTypeController::class, 'getDocumentTypeDatatable'])->name('document-type-datatable');
+        });
     });
 
 

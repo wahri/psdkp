@@ -243,8 +243,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </li>
                                 @endhasrole
                                 <li class="nav-item">
-                                    <a href="/dashboard/category"
-                                        class="nav-link {{ request()->routeIs('dashboard.category.*') ? 'active' : '' }}">
+                                    <a href="/dashboard/document-type"
+                                        class="nav-link {{ request()->routeIs('dashboard.document-type.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Jenis Dokumen</p>
                                     </a>
