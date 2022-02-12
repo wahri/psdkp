@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title',"PSDKP | USERS")
+@section('title',"PSDKP | Jenis Dokumen")
 
 @section('content')
      <!-- Content Wrapper. Contains page content -->
@@ -21,8 +21,14 @@
                                 <div class="row mb-4">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="mr-3" for="document_name">Nama Dokumen :</label>
-                                            <input type="text" id="document_name" name="document_name" class="form-control">
+                                            <label class="mr-3" for="name">Nama Dokumen :</label>
+                                            <input type="text" id="name" name="name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="mr-3" for="information">Keterangan :</label>
+                                            <input type="text" id="information" name="information" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -87,13 +93,13 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Nama :</label>
-                                        <input type="text" name="input[${index}][name]" class="form-control">
+                                        <input type="text" name="input_format[${index}][name]" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Tipe :</label>
-                                        <select name="input[${index}][type]" class="custom-select">
+                                        <select name="input_format[${index}][type]" class="custom-select">
                                             <option value="">Pilih Tipe</option>
                                             <option value="text">Text</option>
                                             <option value="date">Tanggal</option>
@@ -138,9 +144,13 @@
             });
 
             $(columnContainer).on("click","button[name*='delete-column']",function(){
-                $(this).closest(`div[name='column']`).remove().promise().done(function(){
-                    renumberingInputIndex();
-                });
+                let column = $(this).closest(`div[name='column']`);
+
+                if(column.attr('data-index') != 0){
+                    column.remove().promise().done(function(){
+                        renumberingInputIndex();
+                    });
+                }
             });
 
             $(columnContainer).on("click","button[name='option-add']",function(){
@@ -162,7 +172,7 @@
 
                 let html = `
                     <div class="col-3 d-flex mb-3" name="option-col">
-                        <input type="text" id="category_name" placeholder="Pilihan ${index+1}" name="input[${inputIndex}][option][${index}]" class="form-control border-0">
+                        <input type="text" id="category_name" placeholder="Pilihan ${index+1}" name="input_format[${inputIndex}][option][${index}]" class="form-control border-0">
                         <button class="btn text-primary ml-2" name="option-delete" type="button">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -182,14 +192,15 @@
                 $.each(columnContainer.children(),function (index,row){
                     $(row).attr('id', `column-${index}`);
                     $(row).attr('data-index', `${index}`);
-                    $(row).find("input[name*='name']").attr('name', `input[${index}][name]`);
-                    $(row).find("select[name*='type']").attr('name', `input[${index}][type]`);
+                    $(row).find("input_format[name*='name']").attr('name', `input_format[${index}][name]`);
+                    $(row).find("select[name*='type']").attr('name', `input_format[${index}][type]`);
                     $(row).find("div[name*='option-col']").attr('id', `option-col-${index}`);
                     $(row).find("button[name*='delete-column']").attr('id', `delete-column-${index}`);
 
-                  $.each($(row).find("div[name*='option-col'] div[name='option']").children(),function(indexOption,row){
-                    $(row).find("input[name*='option']").attr('name', `input[${index}][option][${indexOption}]`);
-                    $(row).find("input[name*='option']").attr('placeholder', `Pilihan ${indexOption + 1}`);
+                  $.each($(row).find("div[name*='option-col'] div[name='option']").children(),function(indexOption,rowOption){
+                      console.log(rowOption);
+                    $(rowOption).find("input[name*='option']").attr('name', `input_format[${index}][option][${indexOption}]`);
+                    $(rowOption).find("input[name*='option']").attr('placeholder', `Pilihan ${indexOption + 1}`);
                   })
                 });
             }
@@ -201,15 +212,17 @@
                 
 
                 $.ajax({
-                    url:"{{ route('dashboard.document-format.store') }}",
+                    url:"{{ route('dashboard.document-type.store') }}",
                     method:"POST",
                     data:data,
                     dataType:"JSON",
                     success:function(res){
-                        showNotification("Masuk","success",3000);
+                        showNotification(res.message, "success", 3000);
+                        window.location.href = "{{ route('dashboard.document-type.index') }}";
                     },
                     error:function(res){
-
+                        let data = res.responseJSON;
+                        showNotification(data.message, "error", 3000);
                     }
                     
                 })

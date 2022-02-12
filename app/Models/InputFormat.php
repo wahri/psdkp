@@ -11,5 +11,8 @@ class InputFormat extends Model
 
     protected $guarded = "id";
 
-    
+    public function input_option()
+    {
+        return $this->hasMany(InputOption::class, 'input_format_id');
+    }
 }
