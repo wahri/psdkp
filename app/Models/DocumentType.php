@@ -71,5 +71,5 @@ class DocumentType extends Model
             DB::rollBack();
             dd($e);
         }
-    }
+
 }

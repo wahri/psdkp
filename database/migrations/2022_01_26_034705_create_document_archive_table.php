@@ -26,15 +26,18 @@ class CreateDocumentArchiveTable extends Migration
             $table->unsignedBigInteger('box_id')->nullable();
             $table->foreign('box_id')->references('id')->on('boxes')->onDelete('set null')->onUpdate('cascade');
             $table->string('file');
+            // $table->boolean('is_deleted')->default(0);
+
             $table->timestamps();
+            $table->softDeletes();
         });
-        Schema::create('document_archives_info', function (Blueprint $table) {
+        Schema::create('document_archive_infos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('document_archive_id')->nullable();
             $table->foreign('document_archive_id')->references('id')->on('document_archives')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('input_format_id')->nullable();
             $table->foreign('input_format_id')->references('id')->on('input_formats')->onDelete('set null')->onUpdate('cascade');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }
@@ -47,6 +50,6 @@ class CreateDocumentArchiveTable extends Migration
     public function down()
     {
         Schema::dropIfExists('document_archives');
-        Schema::dropIfExists('document_archives_info');
+        Schema::dropIfExists('document_archive_infos');
     }
 }

@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         return $this->call([
             UserSeeder::class,
-            StorageSeeder::class
+            StorageSeeder::class,
+            DocumentTypeSeeder::class
         ]);
     }
 }
