@@ -10,7 +10,9 @@ use App\Models\InputFormat;
 use App\Models\Locker;
 use App\Models\Rack;
 use App\Models\Room;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,6 +52,8 @@ class ArchiveDocumentController extends Controller
 
         $documentArchive = DocumentArchive::where('document_type_id', $documentType_id)->with('documentInfos')->get();
 
+        // dd($documentArchive);
+
         return view('pages.archive.showTypeDocument', compact(['typeDocument', 'inputFormat', 'documentArchive']));
     }
 
@@ -73,10 +77,12 @@ class ArchiveDocumentController extends Controller
 
     public function create($documentType_id)
     {
-        $documentType = DocumentType::find($documentType_id);
-        $inputFormat = InputFormat::where('document_type_id', $documentType_id)->get();
+        $documentType = DocumentType::with(["input_format", "input_format.input_option"])
+            ->where("id", $documentType_id)
+            ->first();
+
         $rooms = Room::all();
-        return view('pages.archive.createDocument', compact(['documentType', 'inputFormat', 'rooms']));
+        return view('pages.archive.createDocument', compact(['documentType', 'rooms']));
     }
 
     public function storeDocument(Request $request)
@@ -84,40 +90,38 @@ class ArchiveDocumentController extends Controller
         $result = [];
         $result['code'] = 400;
 
-        $data = $request->all();
+        try {
+            $data = $request->all();
+            $fileDocument = $request->file('fileDocument');
+            $fileName = time() . "_" . $fileDocument->getClientOriginalName();
+            $uploadFolder = 'fileDocument';
+            $fileDocument->move($uploadFolder, $fileName);
 
-        $fileDocument = $request->file('fileDocument');
-        $fileName = time() . "_" . $fileDocument->getClientOriginalName();
 
-        $uploadFolder = 'fileDocument';
-        $fileDocument->move($uploadFolder, $fileName);
+            DB::beginTransaction();
+            // upload document
+            $saveDocument = new DocumentArchive();
+            $saveDocument->document_type_id = $data['document_type_id'];
+            $saveDocument->room_id = $data['room_id'];
+            $saveDocument->locker_id = $data['locker_id'];
+            $saveDocument->rack_id = $data['rack_id'];
+            $saveDocument->box_id = $data['box_id'];
+            $saveDocument->file = $fileName;
+            $saveDocument->save();
 
-        // upload document
-        $saveDocument = new DocumentArchive();
-        $saveDocument->document_type_id = $data['document_type_id'];
-        $saveDocument->room_id = $data['room_id'];
-        $saveDocument->locker_id = $data['locker_id'];
-        $saveDocument->rack_id = $data['rack_id'];
-        $saveDocument->box_id = $data['box_id'];
-        $saveDocument->file = $fileName;
-        $saveDocument->save();
+            // upload info document
+            foreach ($data["input_formats"] as $eachFormat) {
+                $documentArchiveInfo = new DocumentArchiveInfo;
+                $documentArchiveInfo->document_archive_id = $saveDocument->id;
+                $documentArchiveInfo->input_format_id = $eachFormat["id"];
+                $documentArchiveInfo->value = $eachFormat["value"];
+                $documentArchiveInfo->save();
+            }
 
-        // upload info document
-        $documentInfo = [];
-        for ($i = 0; $i < count($data['input_format_id']); $i++) {
-            $getData["document_archive_id"] = $saveDocument->id;
-            $getData["input_format_id"] = $data["input_format_id"][$i];
-            $getData["value"] = $data["value"][$i];
-
-            array_push($documentInfo, $getData);
-        }
-        $saveDocumentInfo = DocumentArchiveInfo::insert($documentInfo);
-
-        if ($saveDocument && $saveDocumentInfo) {
-            // $result['message'] = "Berhasil mendaftarkan user!";
-            // response()->json($result, 200);
-
+            DB::commit();
             return redirect()->route('dashboard.archive.show.document', ['documentType_id' => $data['document_type_id']]);
+        } catch (Exception $e) {
+            DB::rollback();
         }
     }
 

@@ -48,7 +48,9 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <a href="/dashboard/archive/{{ $eachDocumentType['id'] }}"
-                                                        class="btn btn-info">Pilih Dokumen</a>
+                                                        class="btn btn-info">
+                                                        <i class="fas fa-file-alt"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach

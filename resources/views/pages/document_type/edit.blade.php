@@ -6,8 +6,9 @@
      <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
 
-    <form method="POST" id="addFormatDocumentForm" action="">
+    <form method="POST" id="addFormatDocumentForm" action="{{ route('dashboard.document-type.update',$documentType->id) }}">
         @csrf
+        @method("PUT")
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
@@ -22,13 +23,13 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="mr-3" for="name">Jenis Dokumen :</label>
-                                            <input type="text" id="name" name="name" class="form-control">
+                                            <input type="text" id="name" name="name" value="{{ $documentType->name }}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="mr-3" for="information">Keterangan :</label>
-                                            <input type="text" id="information" name="information" class="form-control">
+                                            <input type="text" id="information" name="information" value="{{ $documentType->information }}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -39,7 +40,57 @@
                 
                 <div class="row">
                     <div class="col-11" id="columnContainer">
-                       
+                        @foreach ($documentType->input_format as $index => $eachFormat)
+                            <div class="card card-success" name="column" data-index="{{ $index }}" id="column-{{ $index }}">
+                                <div class="card-header">
+                                    {{-- <h3 class="card-title"></h3> --}}
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Nama :</label>
+                                                <input type="text" name="input_format[{{ $index }}][name]" value="{{ $eachFormat->name }}" class="form-control">
+                                                <input type="hidden" name="input_format[{{ $index }}][id]" value="{{ $eachFormat->id }}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Tipe :</label>
+                                                <select name="input_format[{{ $index }}][type]" class="custom-select">
+                                                    <option value="">Pilih Tipe</option>
+                                                    <option {{ $eachFormat->type == "text" ? "selected" : "" }} value="text">Text</option>
+                                                    <option {{ $eachFormat->type == "date" ? "selected" : "" }} value="date">Tanggal</option>
+                                                    <option {{ $eachFormat->type == "option" ? "selected" : "" }} value="option">Pilihan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" {{ $eachFormat->type != "option" ? "hidden": "" }}  name="option-col" id="option-col-{{ $index }}">
+                                            <div class="form-group">
+                                                <label>Pilihan :</label>
+                                                <div class="row" name="option">
+                                                    @foreach ($eachFormat->input_option as $indexOption => $eachOption)
+                                                        <div class="col-3 d-flex mb-3" name="option-col">
+                                                            <input type="text" id="category_name" placeholder="Pilihan {{ $indexOption+1 }}" name="input_format[{{ $index}}][option][{{ $indexOption }}][name]" value="{{ $eachOption->name }}" class="form-control border-0"> 
+                                                            <input type="hidden" name="input_format[{{ $index}}][option][{{ $indexOption }}][id]" value="{{ $eachOption->id }}">   
+                                                            <button class="btn text-primary ml-2" name="option-delete" type="button">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <button name="option-add" class="btn text-primary" type="button"> <i class="fas fa-plus"></i> Tambahkan Pilihan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <button class="btn text-danger" name="delete-column" id="delete-column-{{ $index }}" type="button">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="col-1 sticky">
                         <div class="card card-success">
@@ -78,7 +129,7 @@
            let columnContainer = $("div#columnContainer");
            let addFormatDocumentForm = $("form#addFormatDocumentForm");
 
-           addNewColumn();
+        //    addNewColumn();
 
            function addNewColumn(){
                let index = columnContainer.find("div[name='column']").length;
@@ -132,7 +183,7 @@
             $(columnContainer).on("change","select[name*='type']",function(){
                 let column = $(this).closest(`div[name='column']`);
                 let index = column.attr('data-index');
-                
+
                 let typeInput = $(this).val();
                 if(typeInput == 'option'){
                     addNewSelectOption(index);
@@ -172,7 +223,7 @@
 
                 let html = `
                     <div class="col-3 d-flex mb-3" name="option-col">
-                        <input type="text" id="category_name" placeholder="Pilihan ${index+1}" name="input_format[${inputIndex}][option][${index}]" class="form-control border-0">
+                        <input type="text" id="category_name" placeholder="Pilihan ${index+1}" name="input_format[${inputIndex}][option][${index}][name]" class="form-control border-0">
                         <button class="btn text-primary ml-2" name="option-delete" type="button">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -192,13 +243,13 @@
                 $.each(columnContainer.children(),function (index,row){
                     $(row).attr('id', `column-${index}`);
                     $(row).attr('data-index', `${index}`);
-                    $(row).find("input_format[name*='name']").attr('name', `input_format[${index}][name]`);
+                    $(row).find("input[name*='name']").attr('name', `input_format[${index}][name]`);
                     $(row).find("select[name*='type']").attr('name', `input_format[${index}][type]`);
-                    $(row).find("div[name*='option-col']").attr('id', `option-col-${index}`);
+                    $(row).find("div[name*='option-col']").at
+                    tr('id', `option-col-${index}`);
                     $(row).find("button[name*='delete-column']").attr('id', `delete-column-${index}`);
 
                   $.each($(row).find("div[name*='option-col'] div[name='option']").children(),function(indexOption,rowOption){
-                      console.log(rowOption);
                     $(rowOption).find("input[name*='option']").attr('name', `input_format[${index}][option][${indexOption}]`);
                     $(rowOption).find("input[name*='option']").attr('placeholder', `Pilihan ${indexOption + 1}`);
                   })
@@ -209,10 +260,10 @@
                 event.preventDefault();
 
                 let data = $(this).serialize();
+                let url = $(this).attr("action");
                 
-
                 $.ajax({
-                    url:"{{ route('dashboard.document-type.store') }}",
+                    url:url,
                     method:"POST",
                     data:data,
                     dataType:"JSON",
