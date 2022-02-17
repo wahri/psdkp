@@ -105,11 +105,14 @@
                     },
                     {
                         render: function(data, type, row) {
+                            var editUrl = '{{ route("dashboard.document-type.edit", ":id") }}';
+                            editUrl = editUrl.replace(':id', row.id);
+
                             return `
                             <div class="form-group">
-                                <button data-id=${row.id} name="edit"  class="btn btn-success">
+                                <a data-id=${row.id} name="edit" href="${editUrl}"  class="btn btn-success">
                                     <i class="fas fa-edit"></i>
-                                </button>
+                                </a>
                                 <button data-id=${row.id} name="delete" class="btn btn-danger">
                                     <i class="fas fa-trash"></i>
                                 </button>

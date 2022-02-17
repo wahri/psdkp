@@ -47,7 +47,6 @@ class DocumentTypeController extends Controller
 
         $validation = Validator::make($request->all(), DocumentType::$rules, DocumentType::$messages);
 
-
         if (!$validation->fails()) {
             $saveDocumentType = DocumentType::saveDocumentType($request);
 
@@ -81,7 +80,8 @@ class DocumentTypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $documentType = DocumentType::with(["input_format", "input_format.input_option"])->where("id", $id)->first();
+        return view("pages.document_type.edit", compact("documentType"));
     }
 
     /**
@@ -93,7 +93,22 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result = [];
+        $result['code'] = 400;
+
+        $validation = Validator::make($request->all(), DocumentType::$rules, DocumentType::$messages);
+
+        if (!$validation->fails()) {
+            $saveDocumentType = DocumentType::updateDocumentType($request, $id);
+
+            if ($saveDocumentType) {
+                $result['message'] = "Berhasil mengupdate format dokumen!";
+                return response()->json($result, 200);
+            }
+        }
+
+        $result['message'] = "{$validation->errors()->first()}";
+        return response()->json($result, 400);
     }
 
     /**

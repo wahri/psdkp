@@ -96,6 +96,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get("/create", [DocumentTypeController::class, 'create'])->name('create');
         Route::post("/store", [DocumentTypeController::class, 'store'])->name('store');
         Route::delete("/{documentType}", [DocumentTypeController::class, 'destroy'])->name('destroy');
+        Route::get("/{documentType}/edit", [DocumentTypeController::class, 'edit'])->name('edit');
+        Route::put("/{documentType}/update", [DocumentTypeController::class, 'update'])->name('update');
 
         //ROUTE FOR JSON RESPONSE
         Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
