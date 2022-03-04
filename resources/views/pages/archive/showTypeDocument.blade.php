@@ -54,14 +54,14 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">No</th>
-                                                    {{-- @foreach ($inputFormat as $eachInput)
+                                                    @foreach ($inputFormat as $eachInput)
                                                         <th>{{ $eachInput['name'] }}</th>
-                                                    @endforeach --}}
-                                                    <th>{{ $inputFormat[0]->name }}</th>
-                                                    <th>Room</th>
-                                                    <th>Locker</th>
-                                                    <th>Rack</th>
-                                                    <th>Box</th>
+                                                    @endforeach
+                                                    {{-- <th>{{ $inputFormat[0]->name }}</th> --}}
+                                                    <th class="d-none">Room</th>
+                                                    <th class="d-none">Locker</th>
+                                                    <th class="d-none">Rack</th>
+                                                    <th class="d-none">Box</th>
                                                     <th>File Document</th>
                                                     <th width="10%" class="text-center">Aksi</th>
                                                 </tr>
@@ -70,14 +70,14 @@
                                                 @foreach ($documentArchive as $i => $eachDocument)
                                                     <tr>
                                                         <td class="text-center">{{ $i + 1 }}</td>
-                                                        {{-- @foreach ($eachDocument->documentInfos as $eachInfo)
+                                                        @foreach ($eachDocument->documentInfos as $eachInfo)
                                                             <td>{{ $eachInfo['value'] }}</td>
-                                                        @endforeach --}}
-                                                        <td>{{ $eachDocument->documentInfos[0]->value }}</td>
-                                                        <td>{{ $eachDocument->room->name }}</td>
-                                                        <td>{{ $eachDocument->locker->code }}</td>
-                                                        <td>{{ $eachDocument->rack->code }}</td>
-                                                        <td>{{ $eachDocument->box->code }}</td>
+                                                        @endforeach
+                                                        {{-- <td>{{ $eachDocument->documentInfos[0]->value }}</td> --}}
+                                                        <td class="d-none">{{ $eachDocument->room->name }}</td>
+                                                        <td class="d-none">{{ $eachDocument->locker->code }}</td>
+                                                        <td class="d-none">{{ $eachDocument->rack->code }}</td>
+                                                        <td class="d-none">{{ $eachDocument->box->code }}</td>
                                                         <td class="text-center">
                                                             <a href="/fileDocument/{{ $eachDocument->file }}"
                                                                 class="btn btn-info btn-sm" target="_blank">Download</a>
