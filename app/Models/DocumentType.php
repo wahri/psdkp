@@ -56,14 +56,14 @@ class DocumentType extends Model
                 $inputFormat->document_type_id = $documentType->id;
                 $inputFormat->save();
 
-                if ($inputFormat->type == 'option' && isset($eachInputFormat['option'])) {
-                    foreach ($eachInputFormat['option'] as $eachOption) {
-                        $inputOption = new InputOption;
-                        $inputOption->name = $eachOption;
-                        $inputOption->input_format_id = $inputFormat->id;
-                        $inputOption->save();
-                    }
-                }
+                // if ($inputFormat->type == 'option' && isset($eachInputFormat['option'])) {
+                //     foreach ($eachInputFormat['option'] as $eachOption) {
+                //         $inputOption = new InputOption;
+                //         $inputOption->name = $eachOption;
+                //         $inputOption->input_format_id = $inputFormat->id;
+                //         $inputOption->save();
+                //     }
+                // }
             }
 
 
@@ -87,11 +87,15 @@ class DocumentType extends Model
 
             $newInputFormat = Arr::pluck($request["input_format"], "id");
             foreach (InputFormat::where("document_type_id", $id)->get() as $eachInputFormat) {
+                if (!isset($eachInputFormat->id))
+                    continue;
+
                 //will be deleted
                 if (!in_array($eachInputFormat->id, $newInputFormat)) {
                     $eachInputFormat->delete();
                 }
             }
+
 
             foreach ($request['input_format'] as $eachInputFormat) {
                 $inputFormat = Arr::has($eachInputFormat, "id") ?  InputFormat::findOrFail($eachInputFormat["id"]) : new InputFormat;
@@ -100,23 +104,27 @@ class DocumentType extends Model
                 $inputFormat->document_type_id = $documentType->id;
                 $inputFormat->save();
 
-                if (Arr::has($eachInputFormat, "option") && $eachInputFormat["type"] == "option") {
+                // if (Arr::has($eachInputFormat, "option") && $eachInputFormat["type"] == "option") {
 
-                    $newOption = Arr::pluck($eachInputFormat['option'], "id");
-                    foreach (InputOption::where("input_format_id", $eachInputFormat["id"])->get() as $eachInputOption) {
-                        //will be deleted
-                        if (!in_array($eachInputOption->id, $newOption)) {
-                            $eachInputOption->delete();
-                        }
-                    }
+                //     $newOption = Arr::pluck($eachInputFormat['option'], "id");
 
-                    foreach ($eachInputFormat['option'] as $eachOption) {
-                        $inputOption = Arr::has($eachOption, "id") ? InputOption::findOrFail($eachOption["id"]) : new InputOption;
-                        $inputOption->name = $eachOption["name"];
-                        $inputOption->input_format_id = $inputFormat->id;
-                        $inputOption->save();
-                    }
-                }
+                //     foreach (InputOption::where("input_format_id", $eachInputFormat["id"])->get() as $eachInputOption) {
+                //         if (!isset($eachInputOption->id))
+                //             continue;
+
+                //         //will be deleted
+                //         if (!in_array($eachInputOption->id, $newOption)) {
+                //             $eachInputOption->delete();
+                //         }
+                //     }
+
+                //     foreach ($eachInputFormat['option'] as $eachOption) {
+                //         $inputOption = Arr::has($eachOption, "id") ? InputOption::findOrFail($eachOption["id"]) : new InputOption;
+                //         $inputOption->name = $eachOption["name"];
+                //         $inputOption->input_format_id = $inputFormat->id;
+                //         $inputOption->save();
+                //     }
+                // }
             }
 
             DB::commit();

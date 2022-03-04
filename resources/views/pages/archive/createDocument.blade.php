@@ -42,7 +42,27 @@
                                     <input type="hidden" name="document_type_id" value="{{ $documentType->id }}">
                                     @foreach ($documentType->input_format as $index => $input)
                                         <input type="hidden" name="input_formats[{{ $index }}][id]" value="{{ $input->id }}">
-                                        @switch($input->type)
+                                        @if ($input->type == "text")
+                                            <div class="form-group">
+                                                <label for="{{ $input->id }}">{{ $input->name }}</label>
+                                                <input type="text" class="form-control" name="input_formats[{{ $index }}][value]"
+                                                    id="{{ $input->id }}">
+                                            </div>
+                                        @elseif($input->type == "date")
+                                            <div class="form-group">
+                                                <label>{{ $input->name }}</label>
+                                                <div class="input-group date" id="reservationdate"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        name="input_formats[{{ $index }}][value]" data-target="#reservationdate" />
+                                                    <div class="input-group-append" data-target="#reservationdate"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        {{-- @switch($input->type)
                                             @case('text')
                                                 <div class="form-group">
                                                     <label for="{{ $input->id }}">{{ $input->name }}</label>
@@ -77,7 +97,7 @@
                                                     </div>
                                                 </div>
                                                 @break
-                                        @endswitch
+                                        @endswitch --}}
                                     @endforeach
                                     <div class="row">
                                         <div class="col-3">
