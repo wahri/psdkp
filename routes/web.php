@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryDocumentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentFormatController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LockerController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
@@ -23,7 +24,9 @@ use League\CommonMark\Node\Block\Document;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::get('/login', function () {
     return view('auth.login');
 });
 
@@ -51,7 +54,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/create/{documentType_id}', [ArchiveDocumentController::class, 'create'])->name('create.document');
         Route::post('/storeDocument', [ArchiveDocumentController::class, 'storeDocument'])->name('store.document');
         Route::get('/edit/{documentType_id}', [ArchiveDocumentController::class, 'edit'])->name('edit.document');
-        Route::put('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
+        Route::post('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
         Route::delete('/deleteDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deleteDocument'])->name('delete.document');
 
         Route::get('/trash/{documentType_id}', [ArchiveDocumentController::class, 'trashDocument'])->name('trash.document');

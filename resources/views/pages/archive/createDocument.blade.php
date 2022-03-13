@@ -45,7 +45,7 @@
                                         @if ($input->type == "text")
                                             <div class="form-group">
                                                 <label for="{{ $input->id }}">{{ $input->name }}</label>
-                                                <input type="text" class="form-control" name="input_formats[{{ $index }}][value]"
+                                                <input type="text" class="form-control" placeholder="Berisi aktif atau tidak aktif" name="input_formats[{{ $index }}][value]"
                                                     id="{{ $input->id }}">
                                             </div>
                                         @elseif($input->type == "date")
