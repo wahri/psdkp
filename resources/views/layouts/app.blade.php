@@ -165,7 +165,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-success elevation-4">
+        <aside class="main-sidebar sidebar-darkblue elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('dashboard.index') }}" class="brand-link">
                 <img src="{{ asset('img/logo_psdkp.png') }}" alt="AdminLTE Logo"
@@ -208,7 +208,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="{{ route('dashboard.index') }}"
                                 class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="bi bi-house-door"></i>
                                 <p>
                                     Dashboard
                                 </p>
@@ -217,7 +217,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="{{ route('dashboard.archive.index') }}"
                                 class="nav-link {{ request()->routeIs('dashboard.archive.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-archive"></i>
+                                <i class="bi bi-archive"></i>
                                 <p>
                                     Arsip Dokumen
                                 </p>
@@ -226,7 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li
                             class="nav-item {{ request()->routeIs('dashboard.storage.*') || request()->routeIs('dashboard.user.*') || request()->routeIs('dashboard.category.*') || request()->routeIs('dashboard.document-type.*') ? 'menu-open': '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-cogs"></i>
+                                <i class="bi bi-gear"></i>
                                 <p>
                                     Pengaturan
                                     <i class="right fas fa-angle-left"></i>
@@ -237,7 +237,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="{{ route('dashboard.user.index') }}"
                                             class="nav-link {{ request()->routeIs('dashboard.user.*') ? 'active' : '' }}">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="bi bi-arrow-right text-sm"></i> 
                                             <p>Akun Pengguna</p>
                                         </a>
                                     </li>
@@ -245,14 +245,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li class="nav-item">
                                     <a href="/dashboard/document-type"
                                         class="nav-link {{ request()->routeIs('dashboard.document-type.*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="bi bi-arrow-right text-sm"></i> 
                                         <p>Jenis Dokumen</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/dashboard/storage"
                                         class="nav-link {{ request()->routeIs('dashboard.storage.*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="bi bi-arrow-right text-sm"></i> 
                                         <p>Tempat Penyimpanan</p>
                                     </a>
                                 </li>
@@ -261,7 +261,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                <i class="nav-icon fas fa-th"></i>
+                           <i class="bi bi-box-arrow-left"></i>
                                 <p>
                                     Logout
                                 </p>
@@ -293,11 +293,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2022 </a>.</strong> All rights
             reserved.
         </footer>
     </div>

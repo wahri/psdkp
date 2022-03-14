@@ -6,18 +6,31 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+            <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Jenis Dokumen</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
         <!-- Main content -->
-        <div class="content mt-3">
+        <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
                         <div class="card card-primary">
-                            <div class="card-header">
+                            {{-- <div class="card-header">
                                 <h3 class="card-title">Jenis Dokumen</h3>
-                            </div>
+                            </div> --}}
                             <div class="card-body">
                                 <a href="{{ route("dashboard.document-type.create") }}" class="btn btn-success btn-sm mb-3">
-                                    <i class="fas fa-plus mr-2"></i>Buat Format
+                                    <i class="bi bi-pen mr-2"></i></i>Buat Format
                                 </a>
                                 <table id="documentFormatListTable" class="table table-bordered table-striped">
                                     <thead>
@@ -108,13 +121,13 @@
                             var editUrl = '{{ route("dashboard.document-type.edit", ":id") }}';
                             editUrl = editUrl.replace(':id', row.id);
 
+                            // <a data-id=${row.id} name="edit" href="${editUrl}"  class="btn btn-success">
+                            //         <i class="fas fa-edit"></i>
+                            //     </a>
                             return `
                             <div class="form-group">
-                                <a data-id=${row.id} name="edit" href="${editUrl}"  class="btn btn-success">
-                                    <i class="fas fa-edit"></i>
-                                </a>
                                 <button data-id=${row.id} name="delete" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </div>
                         `

@@ -1,5 +1,7 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@200;300;400;700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 
 // Variables
 @import "variables";
@@ -14,3 +16,80 @@
 @import "~noty/src/noty.scss";
 @import "~noty/src/themes/mint.scss";
 @import "~noty/src/themes/nest.scss";
+
+body {
+    font-family: "Poppins";
+
+    .btn-primary {
+        background-color: #013160;
+        border: none;
+
+        &:hover {
+            background-color: #0755a3;
+            transition: all 0.5s;
+        }
+
+        &:focus {
+            background-color: #013160;
+        }
+    }
+
+    .sidebar-darkblue {
+        background-color: #013160;
+
+        .user-panel {
+            .info {
+                a {
+                    color: #fff;
+                }
+            }
+        }
+
+        .nav-item {
+            .nav-link {
+                margin-bottom: 15px;
+
+                color: #fff;
+                font-weight: 400;
+
+                &:hover {
+                    color: #fff;
+                    background-color: #28a745;
+                    transition: all 0.5s;
+                }
+
+                &.active {
+                    background-color: #28a745;
+                }
+
+                p {
+                    margin-left: 15px;
+                }
+            }
+
+            .nav-treeview {
+                .nav-item {
+                    .nav-link {
+                        color: #fff;
+                        font-weight: 200;
+                        font-size: 0.9rem;
+
+                        &:hover {
+                            color: #fff;
+                            background-color: #28a745;
+                            transition: all 0.5s;
+                        }
+
+                        &.active {
+                            background-color: #28a745;
+                        }
+
+                        p {
+                            margin-left: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
