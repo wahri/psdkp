@@ -3,70 +3,69 @@
 @section('title',"PSDKP | Jenis Dokumen")
 
 @section('content')
-     <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
-
-    <form method="POST" id="addFormatDocumentForm" action="">
-        @csrf
-        <!-- Main content -->
-        <div class="content">
+<!-- Content Wrapper. Contains page content -->
+<form method="POST" id="addFormatDocumentForm" action="">
+    @csrf
+    <div class="content-wrapper">
+        <div class="content-header">
             <div class="container-fluid">
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="card card-success">
-                            <div class="card-header">
-                            {{-- <h3 class="card-title"></h3> --}}
-                            </div>
-                            <div class="card-body">
-                                <div class="row mb-4">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="mr-3" for="name">Jenis Dokumen :</label>
-                                            <input type="text" id="name" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="mr-3" for="information">Keterangan :</label>
-                                            <input type="text" id="information" name="information" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-11" id="columnContainer">
-                       
-                    </div>
-                    <div class="col-1 sticky">
-                        <div class="card card-success">
-                            <div class="card-header">
-                            {{-- <h3 class="card-title"></h3> --}}
-                            </div>
-                            <div class="card-body">
-                                <div class="row px-2">
-                                  <button class="btn text-primary" id="addColumnButton" type="button">
-                                      <i class="fas fa-plus"></i>
-                                  </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- /.row -->
+                <div class="row mb-2 justify-content-between">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Jenis Dokumen</h1>
+                    </div><!-- /.col -->
+                    <button type="submit" class="btn btn-primary">
+                        Simpan
+                    </button>
+                </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content -->
-        <button type="submit" class="btn btn-success float btn-lg">
-           Simpan
-        </button>
-    </form>
 
-</div>
+    
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="card card-success">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="mr-3" for="name">Nama Dokumen :</label>
+                                                <input type="text" id="name" name="name" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="mr-3" for="information">Keterangan :</label>
+                                                <textarea name="description" class="wysiwyg"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-11" id="columnContainer">
+                        </div>
+                        <div class="col-1 d-flex justify-content-center align-items-start">
+                            <button class="btn btn-primary" id="addColumnButton" type="button">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+    </div>
+</form>
+
 <!-- /.content-wrapper -->
 @endsection
 
@@ -85,45 +84,30 @@
 
                let html = `
                     <div class="card card-success" name="column" data-index="${index}" id="column-${index}">
-                        <div class="card-header">
-                            {{-- <h3 class="card-title"></h3> --}}
-                        </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <div class="form-group">
                                         <label>Nama :</label>
                                         <input type="text" name="input_format[${index}][name]" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <div class="form-group">
-                                        <label>Tipe :</label>
-                                        <select name="input_format[${index}][type]" class="custom-select">
-                                            <option value="">Pilih Tipe</option>
-                                            <option value="text">Text</option>
-                                            <option value="date">Tanggal</option>
-                                            <option value="option">Pilihan</option>
-                                        </select>
+                                        <label>Keterangan isi :</label>
+                                        <input type="text" name="input_format[${index}][description]" class="form-control">
                                     </div>
-                                </div>
-                                <div class="col-12" hidden name="option-col" id="option-col-${index}">
-                                    <div class="form-group">
-                                        <label>Pilihan :</label>
-                                        <div class="row" name="option">
-                                        </div>
-                                        <button name="option-add" class="btn text-primary" type="button"> <i class="fas fa-plus"></i> Tambahkan Pilihan</button>
-                                    </div>
+                                </div>  
+                                <div class="col-2 d-flex align-items-center justify-content-end">       
+                                    <button class="btn text-danger" name="delete-column" id="delete-column-${index}" type="button">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-end">
-                            <button class="btn text-danger" name="delete-column" id="delete-column-${index}" type="button">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
                     </div>
                `;
+
                columnContainer.append(html);
                
            }
@@ -238,18 +222,6 @@
 @push('style')
 <style>
 
-.float{
-	position:fixed;
-	bottom:40px;
-	right:40px;
-	color:#FFF;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-}
-
-.my-float{
-	margin-top:22px;
-}
 </style>
 @endpush
 

@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@200;300;400;700&display=swap);
+@import url(https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css);
 /*!
  *   AdminLTE v3.1.0
  *   Author: Colorlib
@@ -12933,7 +12935,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 [class*="sidebar-dark-"] {
-  background-color: #013160;
+  background-color: #343a40;
 }
 
 [class*="sidebar-dark-"] .user-panel a:hover {
@@ -12966,7 +12968,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item.menu-open > .nav-link,
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item:hover > .nav-link,
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link:focus {
-  background-color: rgb(40 167 69);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 
@@ -56905,4 +56907,57 @@ readers do not read off random characters that represent icons */
 .noty_theme__nest.noty_type__success {
   background-color: #06D6A0;
   color: #fff;
+}
+
+body {
+  font-family: "Poppins";
+}
+body .btn-primary {
+  background-color: #013160;
+  border: none;
+}
+body .btn-primary:hover {
+  background-color: #0755a3;
+  transition: all 0.5s;
+}
+body .btn-primary:focus {
+  background-color: #013160;
+}
+body .sidebar-darkblue {
+  background-color: #013160;
+}
+body .sidebar-darkblue .user-panel .info a {
+  color: #fff;
+}
+body .sidebar-darkblue .nav-item .nav-link {
+  margin-bottom: 15px;
+  color: #fff;
+  font-weight: 400;
+}
+body .sidebar-darkblue .nav-item .nav-link:hover {
+  color: #fff;
+  background-color: #28a745;
+  transition: all 0.5s;
+}
+body .sidebar-darkblue .nav-item .nav-link.active {
+  background-color: #28a745;
+}
+body .sidebar-darkblue .nav-item .nav-link p {
+  margin-left: 15px;
+}
+body .sidebar-darkblue .nav-item .nav-treeview .nav-item .nav-link {
+  color: #fff;
+  font-weight: 200;
+  font-size: 0.9rem;
+}
+body .sidebar-darkblue .nav-item .nav-treeview .nav-item .nav-link:hover {
+  color: #fff;
+  background-color: #28a745;
+  transition: all 0.5s;
+}
+body .sidebar-darkblue .nav-item .nav-treeview .nav-item .nav-link.active {
+  background-color: #28a745;
+}
+body .sidebar-darkblue .nav-item .nav-treeview .nav-item .nav-link p {
+  margin-left: 15px;
 }

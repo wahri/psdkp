@@ -20,7 +20,7 @@ class DocumentType extends Model
         'information' => 'nullable',
         'input_format.*' => 'required|min:1',
         'input_format.*.name' => 'required',
-        'input_format.*.type' => 'required',
+        'input_format.*.description' => 'required',
     ];
 
     public static $messages = [
@@ -28,7 +28,7 @@ class DocumentType extends Model
         'input_format.required' => 'Tambahkan minimal 1 format input!',
         'input_format.min' => 'Tambahkan minimal 1 format input!',
         'input_format.*.name.required' => 'Nama input tidak boleh kosong!',
-        'input_format.*.type.required' => 'Tipe input boleh kosong!',
+        'input_format.*.description.required' => 'Keterangan isi tidak boleh kosong!',
     ];
 
 
@@ -52,20 +52,10 @@ class DocumentType extends Model
             foreach ($request->input_format as $eachInputFormat) {
                 $inputFormat = new InputFormat;
                 $inputFormat->name = $eachInputFormat['name'];
-                $inputFormat->type = $eachInputFormat['type'];
+                $inputFormat->description = $eachInputFormat['description'];
                 $inputFormat->document_type_id = $documentType->id;
                 $inputFormat->save();
-
-                // if ($inputFormat->type == 'option' && isset($eachInputFormat['option'])) {
-                //     foreach ($eachInputFormat['option'] as $eachOption) {
-                //         $inputOption = new InputOption;
-                //         $inputOption->name = $eachOption;
-                //         $inputOption->input_format_id = $inputFormat->id;
-                //         $inputOption->save();
-                //     }
-                // }
             }
-
 
             DB::commit();
             return true;
