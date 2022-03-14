@@ -34,4 +34,17 @@ class HomeController extends Controller
 
         return view('home', compact(['document_type']));
     }
+
+    public function search($kategori = "all", $kolom = "all", $keyword = "all")
+    {
+        if($kategori != "all"){
+            $document_type = DocumentType::with("input_format")->find($kategori);
+        }else{
+            $document_type = DocumentType::all();
+        }
+
+        // dd($document_type);
+
+        return view('search', compact(['document_type']));
+    }
 }

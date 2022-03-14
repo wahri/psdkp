@@ -29,8 +29,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="alert border-info">
-                            <h4>Keterangan</h4>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. At quo consequatur reiciendis consectetur, magnam aperiam perspiciatis quos, voluptate nam fugiat, velit corporis amet esse! Deleniti recusandae reprehenderit quas sapiente rem eos quos enim repellat, distinctio excepturi ex et minus itaque necessitatibus non reiciendis, quia fuga error doloremque magnam? Praesentium autem non, id animi corrupti magnam fugit tempore labore enim optio, natus et ab sunt. Earum hic fugiat vitae accusantium a, doloremque quaerat corporis? Quibusdam nihil aperiam ut eos! Atque temporibus consequatur facilis magni tempora, minus voluptatem a similique iste cum. Id repudiandae facere quod dolores ipsum libero labore quidem voluptates.
+                            <h5>Keterangan</h5>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. At quo consequatur reiciendis
+                            consectetur, magnam aperiam perspiciatis quos, voluptate nam fugiat, velit corporis amet esse!
+                            Deleniti recusandae reprehenderit quas sapiente rem eos quos enim repellat, distinctio excepturi
+                            ex et minus itaque necessitatibus non reiciendis, quia fuga error doloremque magnam? Praesentium
+                            autem non, id animi corrupti magnam fugit tempore labore enim optio, natus et ab sunt. Earum hic
+                            fugiat vitae accusantium a, doloremque quaerat corporis? Quibusdam nihil aperiam ut eos! Atque
+                            temporibus consequatur facilis magni tempora, minus voluptatem a similique iste cum. Id
+                            repudiandae facere quod dolores ipsum libero labore quidem voluptates.
                         </div>
                     </div>
                 </div>

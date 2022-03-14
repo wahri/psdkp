@@ -25,6 +25,7 @@ use League\CommonMark\Node\Block\Document;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::get('/login', function () {
     return view('auth.login');
