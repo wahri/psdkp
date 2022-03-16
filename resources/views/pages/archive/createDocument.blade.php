@@ -41,63 +41,14 @@
                                 <div class="card-body">
                                     <input type="hidden" name="document_type_id" value="{{ $documentType->id }}">
                                     @foreach ($documentType->input_format as $index => $input)
-                                        <input type="hidden" name="input_formats[{{ $index }}][id]" value="{{ $input->id }}">
-                                        @if ($input->type == "text")
-                                            <div class="form-group">
-                                                <label for="{{ $input->id }}">{{ $input->name }}</label>
-                                                <input type="text" class="form-control" placeholder="Berisi aktif atau tidak aktif" name="input_formats[{{ $index }}][value]"
-                                                    id="{{ $input->id }}">
-                                            </div>
-                                        @elseif($input->type == "date")
-                                            <div class="form-group">
-                                                <label>{{ $input->name }}</label>
-                                                <div class="input-group date" id="reservationdate"
-                                                    data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input"
-                                                        name="input_formats[{{ $index }}][value]" data-target="#reservationdate" />
-                                                    <div class="input-group-append" data-target="#reservationdate"
-                                                        data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        {{-- @switch($input->type)
-                                            @case('text')
-                                                <div class="form-group">
-                                                    <label for="{{ $input->id }}">{{ $input->name }}</label>
-                                                    <input type="text" class="form-control" name="input_formats[{{ $index }}][value]"
-                                                        id="{{ $input->id }}">
-                                                </div>
-                                                @break
-                                            @case('date')
-                                                <div class="form-group">
-                                                    <label>{{ $input->name }}</label>
-                                                    <div class="input-group date" id="reservationdate"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            name="input_formats[{{ $index }}][value]" data-target="#reservationdate" />
-                                                        <div class="input-group-append" data-target="#reservationdate"
-                                                            data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @break
-                                            @case('option')
-                                                <div class="form-group">
-                                                    <label>{{ $input->name }}</label>
-                                                    <div class="input-group mb-3">
-                                                        <select name="input_formats[{{ $index }}][value]" class="custom-select">
-                                                          <option selected>{{ "Pilih ". $input->name }}</option>
-                                                          @foreach ($input->input_option as $eachOption)
-                                                            <option>{{ $eachOption->name }}</option>
-                                                          @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                @break
-                                        @endswitch --}}
+                                        <input type="hidden" name="input_formats[{{ $index }}][id]"
+                                            value="{{ $input->id }}">
+                                        <div class="form-group">
+                                            <label for="{{ $input->id }}">{{ $input->name }}</label>
+                                            <input type="text" class="form-control"
+                                                placeholder="{{ $input->description }}"
+                                                name="input_formats[{{ $index }}][value]" id="{{ $input->id }}">
+                                        </div>
                                     @endforeach
                                     <div class="row">
                                         <div class="col-3">
@@ -145,7 +96,7 @@
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="fileDocument"
-                                                    name="fileDocument">
+                                                    name="fileDocument" onchange="textUploadFile()">
                                                 <label class="custom-file-label" for="fileDocument">Choose file</label>
                                             </div>
                                             <div class="input-group-append">
@@ -266,11 +217,14 @@
             })
 
         })
+        function textUploadFile() {
+            var filename = $('#fileDocument').val().split('\\').pop();
+            $('.custom-file-label').text(filename)
+        }
     </script>
 @endpush
 
 
 {{-- THIS STYLE ONLY RENDER FOR THIS PAGE --}}
 @push('style')
-
 @endpush

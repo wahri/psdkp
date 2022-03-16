@@ -40,7 +40,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="mr-3" for="information">Keterangan :</label>
-                                                <textarea name="description" class="wysiwyg"></textarea>
+                                                <textarea name="information" class="wysiwyg"></textarea>
                                             </div>
                                         </div>
                                     </div>

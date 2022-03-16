@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentArchive;
 use App\Models\DocumentType;
 use App\Models\InputFormat;
 use App\Models\InputOption;
@@ -120,6 +121,12 @@ class DocumentTypeController extends Controller
     public function destroy(DocumentType $documentType)
     {
         try {
+            $isDocumentTypeEmpty = DocumentArchive::where('document_type_id', $documentType->id)->exists();
+            if($isDocumentTypeEmpty){
+                DB::rollback();
+                $result['message'] = "Dokumen ini tidak kosong. Gagal menghapus dokumen!";
+                return response()->json($result, 500);
+            }
             DB::beginTransaction();
             foreach (InputFormat::where("document_type_id", $documentType->id)->get() as $eachInputFormat) {
                 InputOption::where("input_format_id", $eachInputFormat->id)->delete();

@@ -15,7 +15,7 @@ class DropColumnTypeTableInputFormats extends Migration
     {
         Schema::table('input_formats', function (Blueprint $table) {
             $table->dropColumn("type");
-            $table->string("description");
+            $table->string("description")->nullable();
         });
     }
 

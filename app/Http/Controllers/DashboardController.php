@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentArchive;
+use App\Models\DocumentType;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,6 +25,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard.index');
+        $countDocumentType = DocumentType::count();
+        $countDocument = DocumentArchive::count();
+
+        return view('pages.dashboard.index', compact('countDocument', 'countDocumentType'));
     }
 }

@@ -33,7 +33,6 @@ class DocumentTypeSeeder extends Seeder
 
         $format = new InputFormat();
         $format->name = "Nama Dokumen";
-        $format->type = "text";
         $format->document_type_id = $document->id;
         $format->save();
 
@@ -45,7 +44,6 @@ class DocumentTypeSeeder extends Seeder
 
         $format = new InputFormat();
         $format->name = "Tanggal/Bulan";
-        $format->type = "text";
         $format->document_type_id = $document->id;
         $format->save();
 
@@ -57,7 +55,6 @@ class DocumentTypeSeeder extends Seeder
 
         $format = new InputFormat();
         $format->name = "Kapal/Speedboat";
-        $format->type = "text";
         $format->document_type_id = $document->id;
         $format->save();
 
@@ -69,7 +66,6 @@ class DocumentTypeSeeder extends Seeder
 
         $format = new InputFormat();
         $format->name = "Jumlah";
-        $format->type = "text";
         $format->document_type_id = $document->id;
         $format->save();
 
@@ -81,7 +77,6 @@ class DocumentTypeSeeder extends Seeder
 
         $format = new InputFormat();
         $format->name = "Keterangan";
-        $format->type = "text";
         $format->document_type_id = $document->id;
         $format->save();
 

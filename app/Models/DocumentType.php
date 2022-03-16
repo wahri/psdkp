@@ -20,7 +20,7 @@ class DocumentType extends Model
         'information' => 'nullable',
         'input_format.*' => 'required|min:1',
         'input_format.*.name' => 'required',
-        'input_format.*.description' => 'required',
+        'input_format.*.description' => 'nullable',
     ];
 
     public static $messages = [
@@ -28,13 +28,16 @@ class DocumentType extends Model
         'input_format.required' => 'Tambahkan minimal 1 format input!',
         'input_format.min' => 'Tambahkan minimal 1 format input!',
         'input_format.*.name.required' => 'Nama input tidak boleh kosong!',
-        'input_format.*.description.required' => 'Keterangan isi tidak boleh kosong!',
     ];
 
 
     public function input_format()
     {
         return $this->hasMany(InputFormat::class, 'document_type_id');
+    }
+    public function document_archives()
+    {
+        return $this->hasMany(DocumentArchive::class, 'document_type_id');
     }
 
 
