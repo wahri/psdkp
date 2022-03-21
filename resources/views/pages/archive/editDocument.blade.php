@@ -44,7 +44,6 @@
                                     <input type="hidden" name="document_archive_id" value="{{ $documentArchive->id }}">
                                     @foreach ($documentArchive->documentInfos as $eachInfo)
                                         <input type="hidden" name="input_format_id[]" value="{{ $eachInfo->id }}">
-                                        @if ($eachInfo->inputFormat->type == 'text')
                                             <div class="form-group">
                                                 <label
                                                     for="{{ $eachInfo->inputFormat->id }}">{{ $eachInfo->inputFormat->name }}</label>
@@ -52,22 +51,6 @@
                                                     id="{{ $eachInfo->inputFormat->id }}"
                                                     value="{{ $eachInfo->value }}">
                                             </div>
-                                        @elseif($eachInfo->inputFormat->type == 'date')
-                                            <div class="form-group">
-                                                <label>{{ $eachInfo->inputFormat->name }}</label>
-                                                <div class="input-group date" id="reservationdate"
-                                                    data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input"
-                                                        name="value[]" data-target="#reservationdate"
-                                                        value="{{ $eachInfo->value }}" />
-                                                    <div class="input-group-append" data-target="#reservationdate"
-                                                        data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        @endif
                                     @endforeach
                                     <div class="row">
                                         <div class="col-3">

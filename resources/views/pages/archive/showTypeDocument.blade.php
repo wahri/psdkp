@@ -64,9 +64,9 @@
                                         <table id="typeDocumentById" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">No</th>
+                                                    <th class="text-center" style="width: 10px">No</th>
                                                     @foreach ($inputFormat as $eachInput)
-                                                        <th>{{ $eachInput['name'] }}</th>
+                                                        <th style="width: auto">{{ $eachInput['name'] }}</th>
                                                     @endforeach
                                                     {{-- <th>{{ $inputFormat[0]->name }}</th> --}}
                                                     <th class="d-none">Room</th>
