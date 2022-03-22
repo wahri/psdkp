@@ -30,25 +30,25 @@ class HomeController extends Controller
     {
         $documentTypeAll = DocumentType::all();
 
-        if(request()->exists('search')){
+        if (request()->exists('search')) {
             $documentInfoGroup = DocumentArchiveInfo::select('document_archive_id')->where('value', 'like', '%' . request('search') . '%')->groupBy('document_archive_id')->get();
             $documentInfo = DocumentArchiveInfo::select('document_archive_id')->where('value', 'like', '%' . request('search') . '%')->get();
 
             $arrDocumentId = [];
-            foreach($documentInfoGroup as $docInfo){
+            foreach ($documentInfoGroup as $docInfo) {
                 $arrDocumentId[] = $docInfo->document_archive_id;
             }
-            
-            if(request()->exists('kategori') && request('kategori') != "All"){
+
+            if (request()->exists('kategori') && request('kategori') != "All") {
                 $documentArchiveGroup = DocumentArchive::select('document_type_id')->where('document_type_id', request('kategori'))->whereIn('id', $arrDocumentId)->groupBy('document_type_id')->get();
                 $documentArchive = DocumentArchive::with('documentInfos')->where('document_type_id', request('kategori'))->whereIn('id', $arrDocumentId)->get();
-            }else{
+            } else {
                 $documentArchiveGroup = DocumentArchive::select('document_type_id')->whereIn('id', $arrDocumentId)->groupBy('document_type_id')->get();
                 $documentArchive = DocumentArchive::with('documentInfos')->whereIn('id', $arrDocumentId)->get();
             }
 
             $arrDocumentTypeId = [];
-            foreach($documentArchiveGroup as $docArchiveInfo){
+            foreach ($documentArchiveGroup as $docArchiveInfo) {
                 $arrDocumentTypeId[] = $docArchiveInfo->document_type_id;
             }
             $getDocumentType = DocumentType::with(['input_format'])->whereIn('id', $arrDocumentTypeId)->get();
@@ -60,5 +60,23 @@ class HomeController extends Controller
         }
 
         return view('home', compact(['documentTypeAll']));
+    }
+
+    public function getDocumentDetail($id)
+    {
+        $result = [];
+        $result['code'] = 400;
+        $result['message'] = "Data tidak di temukan!";
+
+        $documentArchive = DocumentArchive::with(['documentType', 'documentInfos', 'documentInfos.inputFormat', 'room', 'locker', 'rack', 'box'])->where("id", $id)->first();
+
+        if ($documentArchive->count() > 0) {
+            $result['code'] = 200;
+            $result['data'] = $documentArchive;
+            $result['messages'] = "Berhasil mengambil data!";
+
+            return response()->json($result, 200);
+        }
+        return response()->json($result, 400);
     }
 }
