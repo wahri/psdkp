@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fas fa-bars"></i>
                 </span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarExample01">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarExample01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
                         <a class="nav-link" aria-current="page" href="{{ route('login') }}">Login</a>
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @foreach ($getDocumentType as $eachType)
                             <div class="row mt-3">
                                 <div class="col-md-12">
-                                    <div class="card card-info">
+                                    <div class="card">
                                         <div class="card-header">
                                             <div class="card-title">
                                                 {{ $eachType->name }}
@@ -168,7 +168,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                 <td>{{ $eachDocument->locker->code }}</td>
                                                                 <td>{{ $eachDocument->rack->code }}</td>
                                                                 <td>{{ $eachDocument->box->code }}</td>
-                                                                <td><a href="" class="btn btn-info">Detail</a></td>
+                                                                <td><button type="button" name="showDocument" data-id="{{ $eachDocument->id }}" class="btn btn-info"><i class="bi bi-eye"></i></button></td>
                                                             </tr>
                                                         @endif
                                                     @endforeach
@@ -186,6 +186,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     </div>
     <!-- ./wrapper -->
+
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              {{-- <h5 class="modal-title" id="detailModalLabel">Modal title</h5> --}}
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row px-lg-5 py-lg-4" id="content">
+                       
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -221,6 +241,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             })
+
+            $(window).scroll(function(){
+                var scroll = $(window).scrollTop();
+
+                console.log(scroll);
+                if (scroll > 100) {
+                    $(".navbar").addClass("navbar-scrolled");
+                }else{
+                    $(".navbar").removeClass("navbar-scrolled");  	
+                }
+            })
+                        
+            $("button[name*='showDocument']").on("click",function(){
+   
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: '{{ route("get.document-detail",['']) }}/' + id,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response){ 
+                        let data = response.data;
+
+                        $('#detailModal').modal('show');
+                        
+                        let content = $('#detailModal').find("#content");
+
+                        let html = "";
+
+
+                        $.each(data.document_infos,function(i,v){
+                            html += `
+                                <div class="col-4 mb-4">
+                                    <div class="form-group">
+                                        <label for="">${v.input_format.name} :</label>
+                                        <p>${v.value}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        html+=`
+                            <div class="col-4 mb-4">
+                                <div class="form-group">
+                                    <label for="">Ruang :</label>
+                                    <p>${data.room.name}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        html+=`
+                            <div class="col-4 mb-4">
+                                <div class="form-group">
+                                    <label for="">Loker :</label>
+                                    <p>${data.locker.code}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        html+=`
+                            <div class="col-4 mb-4">
+                                <div class="form-group">
+                                    <label for="">Rack :</label>
+                                    <p>${data.rack.code}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        html+=`
+                            <div class="col-4 mb-4">
+                                <div class="form-group">
+                                    <label for="">Rack :</label>
+                                    <p>${data.box.code}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        html+=`
+                            <div class="col-12 d-flex justify-content-end mb-4">
+                                <a class="btn btn-info" href="/fileDocument/${data.file}"><i class="bi bi-download"></i> Download</a>
+                            </div>
+                        `;
+
+                        content.html(html);
+                    }
+                });
+            });
 
         });
     </script>

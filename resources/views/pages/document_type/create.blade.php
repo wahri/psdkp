@@ -176,16 +176,18 @@
                 $.each(columnContainer.children(),function (index,row){
                     $(row).attr('id', `column-${index}`);
                     $(row).attr('data-index', `${index}`);
-                    $(row).find("input_format[name*='name']").attr('name', `input_format[${index}][name]`);
-                    $(row).find("select[name*='type']").attr('name', `input_format[${index}][type]`);
-                    $(row).find("div[name*='option-col']").attr('id', `option-col-${index}`);
+                    // console.log(index)
+                    $(row).find("input[name*='name']").attr('name', `input_format[${index}][name]`);
+                    $(row).find("input[name*='description']").attr('name', `input_format[${index}][description]`);
                     $(row).find("button[name*='delete-column']").attr('id', `delete-column-${index}`);
+                    // $(row).find("select[name*='type']").attr('name', `input_format[${index}][type]`);
+                    // $(row).find("div[name*='option-col']").attr('id', `option-col-${index}`);
 
-                  $.each($(row).find("div[name*='option-col'] div[name='option']").children(),function(indexOption,rowOption){
-                      console.log(rowOption);
-                    $(rowOption).find("input[name*='option']").attr('name', `input_format[${index}][option][${indexOption}]`);
-                    $(rowOption).find("input[name*='option']").attr('placeholder', `Pilihan ${indexOption + 1}`);
-                  })
+                //   $.each($(row).find("div[name*='option-col'] div[name='option']").children(),function(indexOption,rowOption){
+                //       console.log(rowOption);
+                //     $(rowOption).find("input[name*='option']").attr('name', `input_format[${index}][option][${indexOption}]`);
+                //     $(rowOption).find("input[name*='option']").attr('placeholder', `Pilihan ${indexOption + 1}`);
+                //   })
                 });
             }
 
