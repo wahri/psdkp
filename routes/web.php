@@ -60,6 +60,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/edit/{documentType_id}', [ArchiveDocumentController::class, 'edit'])->name('edit.document');
         Route::post('/updateDocument', [ArchiveDocumentController::class, 'updateDocument'])->name('update.document');
         Route::delete('/deleteDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deleteDocument'])->name('delete.document');
+        Route::get('/deletePermanentDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'deletePermanentDocument'])->name('deletepermanent.document');
+        Route::get('/restoreDocument/{documentArchive_id}', [ArchiveDocumentController::class, 'restoreDocument'])->name('restore.document');
 
         Route::get('/trash/{documentType_id}', [ArchiveDocumentController::class, 'trashDocument'])->name('trash.document');
 

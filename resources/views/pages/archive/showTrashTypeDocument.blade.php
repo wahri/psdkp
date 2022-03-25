@@ -71,16 +71,10 @@
                                                                 class="btn btn-info btn-sm" target="_blank">Download</a>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ route('dashboard.archive.edit.document', $eachDocument->id) }}"
-                                                                class="btn btn-warning btn-sm">Edit</a>
-                                                            <form method="POST" class="d-inline"
-                                                                onsubmit="return confirm('Move data to trash?')"
-                                                                action="{{ route('dashboard.archive.delete.document', [$eachDocument->id]) }}">
-                                                                @csrf
-                                                                <input type="hidden" value="DELETE" name="_method">
-                                                                <input type="submit" value="Delete"
-                                                                    class="btn btn-danger btn-sm">
-                                                            </form>
+                                                            <a href="{{ route('dashboard.archive.restore.document', $eachDocument->id) }}"
+                                                                class="btn btn-success btn-sm btn-block">Restore</a>
+                                                            <a href="{{ route('dashboard.archive.deletepermanent.document', $eachDocument->id) }}"
+                                                                class="btn btn-danger btn-sm btn-block">Delete Permanent</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
