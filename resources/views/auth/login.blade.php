@@ -7,10 +7,34 @@
     <title>PSDKP | Log in</title>
 
     <script src="https://kit.fontawesome.com/3c3b5dd79d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{{ asset("css/app.css") }}">
+    {{-- <link rel="stylesheet" href="{{ asset("css/splash.css") }}"> --}}
 </head>
 
 <body class="hold-transition login-page">
+    <div class="preloader">
+        <div class="splash">
+            <div class="splash_logo">
+                <img src="{{ asset('img/logo_psdkp.png') }}" 
+              >
+            </div>
+            <div class="splash_svg">
+              <svg width="100%" height="100%">
+                <rect width="100%" height="100%" >
+              </svg>
+            </div>
+            <div class="splash_minimize">
+              <svg width="100%" height="100%">
+                <rect width="100%" height="100%" >
+              </svg>
+            </div>
+        </div>
+        <div class="text">
+            <p>Welcome!</p>
+            <button id="start">Start Now</button>
+        </div>
+    </div>
+    
     <div class="login-box">
         <div class="login-logo">
             <a href="#"><b>PSDKP</b></a>
@@ -61,7 +85,11 @@
     </div>
     <!-- /.login-box -->
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/splash.js') }}"></script>
+
+
 </body>
 
 </html>
