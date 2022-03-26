@@ -29,9 +29,10 @@
               </svg>
             </div>
         </div>
-        <div class="text">
-            <p>Welcome!</p>
-            <button id="start">Start Now</button>
+        <div class="text text-center">
+            <p class="mb-0">Welcome!</p>
+            <p class="h6 mt-0">Sistem Arsip PSDKP Batam</p>
+            <button id="start">Login Now</button>
         </div>
     </div>
     
