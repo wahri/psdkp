@@ -35,9 +35,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </span>
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarExample01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" aria-current="page" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link btn btn-success mt-3 ml-3" aria-current="page" href="{{ route('login') }}">
+                        <i class="bi bi-arrow-left"></i>
+                            Kembali
+                        </a>
                     </li>
                 </ul>
 
@@ -72,10 +75,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </nav>
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper home-page">
+        <div class="content-wrapper home-page" style="background: url({{ asset('/img/bookshelf.png') }}) no-repeat center center; background-size: cover;">
             <!-- Main content -->
-            <section class="content">
-                <div class="container my-5">
+            <section class="content" style="background-color: #013060E8; padding: 50px; border-radius: 10px">
+                <div class="container mt-5">
                     <div class="row mb-3">
                         <div class="col-12 text-center">
                             <img src="{{ asset('img/logo_psdkp.png') }}" alt="AdminLTE Logo"
@@ -123,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                             placeholder="Cari dokumen..." name="search"
                                                             value="{{ request('search') ?? '' }}">
                                                         <div class="input-group-append">
-                                                            <button type="submit" class="btn btn-lg btn-info">
+                                                            <button type="submit" class="btn btn-lg btn-success">
                                                                 <i class="fa fa-search"></i>
                                                             </button>
                                                         </div>
@@ -242,16 +245,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 theme: 'bootstrap4'
             })
 
-            $(window).scroll(function(){
-                var scroll = $(window).scrollTop();
+            // $(window).scroll(function(){
+            //     var scroll = $(window).scrollTop();
 
-                console.log(scroll);
-                if (scroll > 100) {
-                    $(".navbar").addClass("navbar-scrolled");
-                }else{
-                    $(".navbar").removeClass("navbar-scrolled");  	
-                }
-            })
+            //     console.log(scroll);
+            //     if (scroll > 100) {
+            //         $(".navbar").addClass("navbar-scrolled");
+            //     }else{
+            //         $(".navbar").removeClass("navbar-scrolled");  	
+            //     }
+            // })
                         
             $("button[name*='showDocument']").on("click",function(){
    

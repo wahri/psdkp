@@ -24,7 +24,7 @@ use League\CommonMark\Node\Block\Document;
 |
 */
 
-Route::get('/search', [HomeController::class, 'index'])->name('index');
+Route::get('/search', [HomeController::class, 'index'])->name('search');
 // Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::prefix('get')->name('get.')->middleware(['json-response'])->group(function () {
     Route::get('document-detail/{id}', [HomeController::class, 'getDocumentDetail'])->name('document-detail');

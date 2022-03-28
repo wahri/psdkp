@@ -7,35 +7,34 @@
     <title>PSDKP | Log in</title>
 
     <script src="https://kit.fontawesome.com/3c3b5dd79d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset("css/app.css") }}">
-    {{-- <link rel="stylesheet" href="{{ asset("css/splash.css") }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/splash.css') }}">
 </head>
 
 <body class="hold-transition login-page">
     <div class="preloader">
-        <div class="splash">
-            <div class="splash_logo">
-                <img src="{{ asset('img/logo_psdkp.png') }}" 
-              >
+        <div class="door" id="door1">
+            <!-- Desired markup for content is placed within the grid-item-interior div -->
+            <div class="grid-item-interior" style="background: url({{ asset('/img/bookshelf.png') }}) no-repeat center center; background-size: cover;">
+                
+                <div class="welcome">
+                    <div class="bg-welcome text-center">
+                        <img src="{{ asset('img/logo_psdkp.png') }}" style="width: 100px" class="mb-3">
+                        <p class="mb-0 h1 text-light">Welcome!</p>
+                        <p class="h6 mt-0 h3 text-light mb-5">Sistem Arsip PSDKP Batam</p>
+                        <button id="start" class="btn btn-success">Login Now</button>
+
+                    </div>
+                </div>
+
             </div>
-            <div class="splash_svg">
-              <svg width="100%" height="100%">
-                <rect width="100%" height="100%" >
-              </svg>
-            </div>
-            <div class="splash_minimize">
-              <svg width="100%" height="100%">
-                <rect width="100%" height="100%" >
-              </svg>
-            </div>
-        </div>
-        <div class="text text-center">
-            <p class="mb-0">Welcome!</p>
-            <p class="h6 mt-0">Sistem Arsip PSDKP Batam</p>
-            <button id="start">Login Now</button>
-        </div>
+
+            <!-- left/right 'Door' panels / animations applied to these divs -->
+            <div class="left" style="background: url({{ asset('/img/left-door.svg') }}) no-repeat center center; background-size: cover;"></div>
+            <div class="right" style="background: url({{ asset('/img/right-door.svg') }}) no-repeat center center; background-size: cover;"></div>
+        </div><!-- end /.door -->
     </div>
-    
+
     <div class="login-box">
         <div class="login-logo">
             <a href="#"><b>PSDKP</b></a>
@@ -89,6 +88,14 @@
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('js/splash.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(".door").click(function() {
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
 
 
 </body>

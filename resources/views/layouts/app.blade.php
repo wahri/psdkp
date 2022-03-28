@@ -223,6 +223,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('search') }}"
+                                class="nav-link">
+                                <i class="bi bi-search"></i>
+                                <p>
+                                    Cari Dokumen
+                                </p>
+                            </a>
+                        </li>
                         <li
                             class="nav-item {{ request()->routeIs('dashboard.storage.*') || request()->routeIs('dashboard.user.*') || request()->routeIs('dashboard.category.*') || request()->routeIs('dashboard.document-type.*') ? 'menu-open': '' }}">
                             <a href="#" class="nav-link">

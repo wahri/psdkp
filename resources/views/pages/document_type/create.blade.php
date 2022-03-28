@@ -72,6 +72,7 @@
 {{-- THIS SCRIPT ONLY RENDER FOR THIS PAGE --}}
 @push('script')
    <script>
+       
        $(function(){
            let addColumnButton = $("button#addColumnButton");
            let columnContainer = $("div#columnContainer");
